@@ -28,8 +28,13 @@ fragment X_ :	'x' | 'X';
 fragment Y_ :	'y' | 'Y';
 fragment Z_ :	'z' | 'Z';
 
+keyword
+ : USE
+ | USER
+ ;
+
 TRUE : 	T_ R_ U_ E_ ;
-FALSE : F_ A_ L_ S_ E_;
+FALSE : F_ A_ L_ S_ E_ ;
 ALL : A_ L_ L_ ;
 NOT : N_ O_ T_ | '!';
 LIKE : L_ I_ K_ E_ ;
@@ -149,7 +154,6 @@ ENABLE: E_ N_ A_ B_ L_ E_ ;
 DEFAULT: D_ E_ F_ A_ U_ L_ T_ ;
 DISABLE: D_ I_ S_ A_ B_ L_ E_ ;
 READONLY: R_ E_ A_ D_ O_ N_ L_ Y_ ;
-//NO_DROP: N_ O_ __ D_ R_ O_ P_ ;   TODO:检验是否需要？
 LOCATION: L_ O_ C_ A_ T_ I_ O_ N_ ;
 TABLESAMPLE: T_ A_ B_ L_ E_ S_ A_ M_ P_ L_ E_ ;
 BUCKET: B_ U_ C_ K_ E_ T_ ;
@@ -180,8 +184,6 @@ SET: S_ E_ T_ ;
 UNSET: U_ N_ S_ E_ T_ ;
 TBLPROPERTIES: T_ B_ L_ P_ R_ O_ P_ E_ R_ T_ I_ E_ S_ ;
 IDXPROPERTIES: I_ D_ X_ P_ R_ O_ P_ E_ R_ T_ I_ E_ S_ ;
-//VALUE_TYPE: $_ V_ A_ L_ U_ E_ $_ ;    //TODO:  检验需不需要？
-//ELEM_TYPE: $_ E_ L_ E_ M_ $_ ;
 CASCADED: C_ A_ S_ C_ A_ D_ E_ D_ ;
 CASE: C_ A_ S_ E_ ;
 WHEN: W_ H_ E_ N_ ;
@@ -190,10 +192,8 @@ ELSE: E_ L_ S_ E_ ;
 END: E_ N_ D_ ;
 MAPJOIN: M_ A_ P_ J_ O_ I_ N_ ;
 STREAMTABLE: S_ T_ R_ E_ A_ M_ T_ A_ B_ L_ E_ ;
-//HOLD_DDLTIME: H_ O_ L_ D_ __ D_ D_ L_ T_ I_ M_ E_ ;
 CLUSTERSTATUS: C_ L_ U_ S_ T_ E_ R_ S_ T_ A_ T_ U_ S_ ;
 UTC: U_ T_ C_ ;
-//UTCTIMESTAMP: U_ T_ C_ __ T_ M_ E_ S_ T_ A_ M_ P_ ;
 LONG: L_ O_ N_ G_ ;
 DELETE: D_ E_ L_ E_ T_ E_ ;
 FETCH: F_ E_ T_ C_ H_ ;
@@ -241,7 +241,7 @@ STATISTICS: S_ T_ A_ T_ I_ S_ T_ I_ C_ S_ ;
 USE: U_ S_ E_ ;
 OPTION: O_ P_ T_ I_ O_ N_ ;
 CONCATENATE: C_ O_ N_ C_ A_ T_ E_ N_ A_ T_ E_ ;
-// SHOW_DATABASE: S_ H_ O_ W_ __ D_ A_ T_ A_ B_ A_ S_ E_ ;
+ //SHOW_DATABASE: S_ H_ O_ W_ __ D_ A_ T_ A_ B_ A_ S_ E_ ;
 UPDATE: U_ P_ D_ A_ T_ E_ ;
 RESTRICT: R_ E_ S_ T_ R_ I_ C_ T_ ;
 CASCADE: C_ A_ S_ C_ A_ D_ E_ ;
@@ -267,16 +267,68 @@ USER: U_ S_ E_ R_ ;
 ROLE: R_ O_ L_ E_ ;
 INNER: I_ N_ N_ E_ R_ ;
 EXCHANGE: E_ X_ C_ H_ A_ N_ G_ E_ ;
-
-
-
+IDENTIFIED: I_ D_ E_ N_ T_ I_ F_ I_ E_ D_ ;
+CHAR: C_ H_ A_ R_ ;
+ABS: A_ B_ S_;
+ACOS: A_ C_ O_ S_;
+ASIN: A_ S_ I_ N_;
+ATAN: A_ T_ A_ N_;
+CEIL: C_ E_ I_ L_;
+COS: C_ O_ S_;
+COT: C_ O_ T_;
+EXP: E_ X_ P_;
+FLOOR: F_ L_ O_ O_ R_;
+LN: L_ N_;
+POW: P_ O_ W_;
+RAND: R_ A_ N_ D_;
+ROUND: R_ O_ U_ N_ D_;
+SIN: S_ I_ N_ ;
+SQRT: S_ Q_ R_ T_ ;
+TAN: T_ A_ N_ ;
+LCASE: L_ C_ A_ S_ E_ ;
+LOWER: L_ O_ W_ E_ R_ ;
+LTRIM: L_ T_ R_ I_ M_ ;
+RTRIM: R_ T_ R_ I_ M_ ;
+CONCAT: C_ O_ N_ C_ A_ T_ ;
+SUBSTR: S_ U_ B_ S_ T_ R_ ;
+TRIM: T_ R_ I_ M_ ;
+UCASE: U_ C_ A_ S_ E_ ;
+UPPER: U_ P_ P_ E_ R_ ;
+INTERVAL: I_ N_ T_ E_ R_ V_ A_ L_;
+TO_DATE: T_ O_ '_'  D_ A_ T_ E_ ;
+DAY: D_ A_ Y_ ;
+HOUR: H_ O_ U_ R_ ;
+MINUTE: M_ I_ N_ U_ T_ E_ ;
+MONTH: M_ O_ N_ T_ H_ ;
+SECOND: S_ E_ C_ O_ N_ D_ ;
+FROM_UNIXTIME: F_ R_ O_ M_ '_' U_ N_ I_ X_ T_ I_ M_ E_  ;
+YEAR: Y_ E_ A_ R_ ;
+DATE_ADD: D_ A_ T_ E_ '_' A_ D_ D_ ;
+DATE_SUB: D_ A_ T_ E_ '_' S_ U_ B_ ;
+COLLATE: C_ O_ L_ L_ A_ T_ E_ ;
+AVG: A_ V_ G_ ;
+COUNT: C_ O_ U_ N_ T_ ;
+MAX: M_ A_ X_ ;
+MIN: M_ I_ N_ ;
+SUM: S_ U_ M_ ;
+COALESCE: C_ O_ A_ L_ E_ S_ C_ E_ ;
+DUPLICATE: D_ U_ P_ L_ I_ C_ A_ T_ E_ ;
+SERVER: S_ E_ R_ V_ E_ R_ ;
+ALIASES: A_ L_ I_ A_ S_ E_ S_ ;
+ALIAS: A_ L_ I_ A_ S_ E_ S_ ;
+VALUES: V_ A_ L_ U_ E_ S_ ;
+VALUE: V_ A_ L_ U_ E_ ;
+LOW_PRIORITY: L_ O_ W_ '_' P_ R_ I_ O_ R_ I_ T_ Y_ ;
+HIGH_PRIORITY: H_ I_ G_ H_ '_' P_ R_ I_ O_ R_ I_ T_ Y_ ;
+HASH: H_ A_ S_ H_ ;
+REFERENCES: R_ E_ F_ E_ R_ E_ N_ C_ E_ S_ ;
 // basic token definition ------------------------------------------------------------
 
 DIVIDE	: (  D_ I_ V_ ) | '/' ;
 MOD	: (  M_ O_ D_ ) | '%' ;
 OR	: (  O_ R_ ) | '||';
 AND	: (  A_ N_ D_ ) | '&&';
-
+XOR : ( X_ O_ R_ ) | '^';
 ARROW	: '=>' ;
 EQ	: '=' | '<=>' ;
 NOT_EQ	: '<>' | '!=' | '~='| '^=';
@@ -304,11 +356,13 @@ BITAND	: '&' ;
 POWER_OP: '^' ;
 GTH	: '>' ;
 LTH	: '<' ;
+Double_Quote   : '"' | '\'';
 
 
 
 INTEGER_NUM		: ('0'..'9')+ ;
-
+VARCHAR_NUM     : ('0'..'9')+;
+BINARY_NUM      : ('0'..'9')+;
 fragment HEX_DIGIT_FRAGMENT: ( 'a'..'f' | 'A'..'F' | '0'..'9' ) ;
 HEX_DIGIT:
 	(  '0x'     (HEX_DIGIT_FRAGMENT)+  )
@@ -336,9 +390,18 @@ TEXT_STRING:
 	)
 ;
 
+
 ID:
 	( 'A'..'Z' | 'a'..'z' | '_' | '$') ( 'A'..'Z' | 'a'..'z' | '_' | '$' | '0'..'9' )*
 ;
+
+
+
+
+delimeted_ID:
+'"' ID '"'
+;
+
 
 USER_VAR:
 	'@' (USER_VAR_SUBFIX1 | USER_VAR_SUBFIX2 | USER_VAR_SUBFIX3 | USER_VAR_SUBFIX4)
@@ -352,10 +415,16 @@ WHITE_SPACE	: ( ' '|'\r'|'\t'|'\n' ) -> skip ;
 
 // http://dev.mysql.com/doc/refman/5.6/en/comments.html
 SL_COMMENT	: ( ('--'|'#') ~('\n'|'\r')* '\r'? '\n' ) -> skip ;
-//ML_COMMENT	: '/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;} ;
 
 
+IDENTIFIER_WITH_WILDCARDS :
+    ( 'A'..'Z' | 'a'..'z' | '0'..'9' | '*' |'%')+
+;
 
+Regex_Escaped_Unicode: ' ' .. '[' | ']' .. '~' | '\u00A0' .. '\uFFFF';
+delimited_statement:
+    Regex_Escaped_Unicode
+;
 
 
 //-----------------------------------------------------------------Parser part----------------------------------------------------------------------
@@ -369,14 +438,10 @@ integer_types:
 | FLOAT
 | DOUBLE
 | DATE
-| DATETIME
 | TIMESTAMP
-| STRING
 | VARCHAR
 | BINARY
 | DECIMAL
-| STRUCT
-| MAP
 ;
 
 
@@ -385,11 +450,10 @@ integer_types:
 
 
 // basic type definition -----------------------------------------------------------------------
-// basic type definition -----------------------------------------------------------------------
 relational_op:
 	EQ | LTH | GTH | NOT_EQ | LET | GET  ;
 
-charset_name:
+/*charset_name:
 	  ARMSCII8
 	| ASCII
 	| BIG5
@@ -426,19 +490,19 @@ charset_name:
 	| UCS2
 	| UJIS
 	| UTF8;
-
+*/
 cast_data_type:
 	BINARY (INTEGER_NUM)?
 	| CHAR (INTEGER_NUM)?
 	| DATE
 	| DATETIME
 	| DECIMAL ( INTEGER_NUM (COMMA INTEGER_NUM)? )?
-	| SIGNED (INTEGER)?
-	| TIME
-	| UNSIGNED (INTEGER)?
+	//| SIGNED (INTEGER)?
+	//| TIME
+	//| UNSIGNED (INTEGER)?
 ;
 
-search_modifier:
+/*search_modifier:
 	(IN NATURAL LANGUAGE MODE)
 	| (IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION)
 	| (IN BOOLEAN MODE)
@@ -449,17 +513,18 @@ transcoding_name:
 	  LATIN1
 	| UTF8
 ;
+*/
 
 interval_unit:
 	  SECOND
 	| MINUTE
 	| HOUR
 	| DAY
-	| WEEK
+//	| WEEK
 	| MONTH
-	| QUARTER
+//	| QUARTER
 	| YEAR
-	| SECOND_MICROSECOND
+/*	| SECOND_MICROSECOND
 	| MINUTE_MICROSECOND
 	| MINUTE_SECOND
 	| HOUR_MICROSECOND
@@ -469,12 +534,14 @@ interval_unit:
 	| DAY_SECOND
 	| DAY_MINUTE
 	| DAY_HOUR
-	| YEAR_MONTH
+	| YEAR_MONTH */
 ;
 
+/*
 collation_names:
 	LATIN1_GENERAL_CS | LATIN1_BIN
 ;
+*/
 
 // basic const data definition ---------------------------------------------------------------
 string_literal:		TEXT_STRING ;
@@ -495,199 +562,112 @@ functionList:
 	| char_functions
 	| time_functions
 	| other_functions
+	| group_functions
 ;
 
 number_functions:
 	  ABS
 	| ACOS
 	| ASIN
-	| ATAN2
 	| ATAN
 	| CEIL
-	| CEILING
-	| CONV
 	| COS
 	| COT
-	| CRC32
-	| DEGREES
 	| EXP
 	| FLOOR
 	| LN
-	| LOG10
-	| LOG2
-	| LOG
-	| MOD
-	| PI
 	| POW
-	| POWER
-	| RADIANS
 	| RAND
 	| ROUND
-	| SIGN
 	| SIN
 	| SQRT
 	| TAN
-	| TRUNCATE
 ;
 
 char_functions:
-	  ASCII
-	| BIN
-	| BIT_LENGTH
-	| CHAR_LENGTH
-	| CHAR
-	| CONCAT_WS
-	| CONCAT
-	| ELT
-	| EXPORT_SET
-	| FIELD
-	| FIND_IN_SET
-	| FORMAT
-	| FROM_BASE64
-	| HEX
-	| INSERT
-	| INSTR
-	| LEFT
-	| LENGTH
-	| LOAD_FILE
-	| LOCATE
+	  LCASE
 	| LOWER
-	| LPAD
 	| LTRIM
-	| MAKE_SET
-	| MID
-	| OCT
-	| ORD
-	| QUOTE
-	| REPEAT
-	| REPLACE
-	| REVERSE
-	| RIGHT
-	| RPAD
 	| RTRIM
-	| SOUNDEX
-	| SPACE
-	| STRCMP
-	| SUBSTRING_INDEX
-	| SUBSTRING
-	| TO_BASE64
+	| CONCAT
+	| SUBSTR
 	| TRIM
-	| UNHEX
+	| UCASE
 	| UPPER
-	| WEIGHT_STRING
 ;
 
 time_functions:
-	  ADDDATE
-	| ADDTIME
-	| CONVERT_TZ
-	| CURDATE
-	| CURTIME
-	| DATE_ADD
-	| DATE_FORMAT
-	| DATE_SUB
-	| DATE
-	| DATEDIFF
-	| DAYNAME
-	| DAYOFMONTH
-	| DAYOFWEEK
-	| DAYOFYEAR
-	| EXTRACT
-	| FROM_DAYS
-	| FROM_UNIXTIME
-	| GET_FORMAT
+	  TO_DATE
+	| DAY
 	| HOUR
-	| LAST_DAY
-	| MAKEDATE
-	| MAKETIME
-	| MICROSECOND
 	| MINUTE
 	| MONTH
-	| MONTHNAME
-	| NOW
-	| PERIOD_ADD
-	| PERIOD_DIFF
-	| QUARTER
-	| SEC_TO_TIME
 	| SECOND
-	| STR_TO_DATE
-	| SUBTIME
-	| SYSDATE
-	| TIME_FORMAT
-	| TIME_TO_SEC
-	| TIME
-	| TIMEDIFF
-	| TIMESTAMP
-	| TIMESTAMPADD
-	| TIMESTAMPDIFF
-	| TO_DAYS
-	| TO_SECONDS
-	| UNIX_TIMESTAMP
-	| UTC_DATE
-	| UTC_TIME
-	| UTC_TIMESTAMP
-	| WEEK
-	| WEEKDAY
-	| WEEKOFYEAR
+	| FROM_UNIXTIME
 	| YEAR
-	| YEARWEEK
+	| DATE_ADD
+	| DATE_SUB
 ;
 
 other_functions:
-	MAKE_SET | LOAD_FILE
-	| IF | IFNULL
-	| AES_ENCRYPT | AES_DECRYPT
-	| DECODE | ENCODE
-	| DES_DECRYPT | DES_ENCRYPT
-	| ENCRYPT | MD5
-	| OLD_PASSWORD | PASSWORD
-	| BENCHMARK | CHARSET | COERCIBILITY | COLLATION | CONNECTION_ID
-	| CURRENT_USER | DATABASE | SCHEMA | USER | SESSION_USER | SYSTEM_USER
-	| VERSION
-	| FOUND_ROWS | LAST_INSERT_ID | DEFAULT
-	| GET_LOCK | RELEASE_LOCK | IS_FREE_LOCK | IS_USED_LOCK | MASTER_POS_WAIT
-	| INET_ATON | INET_NTOA
-	| NAME_CONST
-	| SLEEP
-	| UUID
-	| VALUES
+    COALESCE
 ;
 
 group_functions:
-	AVG | COUNT | MAX | MIN | SUM
-	| BIT_AND | BIT_OR | BIT_XOR
-	| GROUP_CONCAT
-	| STD | STDDEV | STDDEV_POP | STDDEV_SAMP
-	| VAR_POP | VAR_SAMP | VARIANCE
+      AVG
+	| COUNT
+	| MAX
+	| MIN
+	| SUM
 ;
 
 
 
 
 // identifiers --------------------------------------------------------------------------------
-schema_name			: ID ;
-table_name			: ID ;
-engine_name			: ID ;
-column_name			: ID ;
-view_name			: ID ;
-parser_name			: ID ;
-index_name			: ID ;
-partition_name			: ID ;
-partition_logical_name		: ID ;
-constraintbol_name		: ID ;
-foreign_keybol_name		: ID ;
-collation_name			: ID ;
-event_name			: ID ;
-user_name			: ID ;
-function_name			: ID ;
-procedure_name			: ID ;
-server_name			: ID ;
-wrapper_name			: ID ;
-alias				: ( AS )? ID ;
+schema_name			: any_name;
+database_name      : any_name ;
+table_name			: any_name ;
+engine_name			: any_name ;
+column_name			: any_name ;
+view_name			: any_name ;
+parser_name			: any_name ;
+index_name			: any_name ;
+partition_name			: any_name ;
+partition_logical_name		: any_name ;
+constraintbol_name		: any_name ;
+foreign_keybol_name		: any_name ;
+collation_name			: any_name ;
+event_name			: any_name ;
+user_name			: any_name ;
+function_name			: any_name ;
+procedure_name			: any_name ;
+server_name			: any_name ;
+wrapper_name			: any_name ;
+alias				: ( AS )? any_name ;
+password            :  any_name ;
+server_alias        : any_name ;
+role_name           : any_name ;
+group_name          : any_name ;
+principal_name      : any_name ;
+
+any_name
+ : ID
+ | keyword
+ ;
 
 
 
 
+
+// -------------------------priv_type ---------------------------------------------------------------
+priv_type:
+      INSERT
+    | SELECT
+    | UPDATE
+    | DELETE
+    | ALL
+;
 
 // expression statement -------------------------------------------------------------------------------
 expression:	exp_factor1 ( OR exp_factor1 )* ;
@@ -697,15 +677,15 @@ exp_factor3:	(NOT)? exp_factor4 ;
 exp_factor4:	bool_primary ( IS (NOT)? (boolean_literal|NULL) )? ;
 bool_primary:
 	  ( predicate relational_op predicate )
-	| ( predicate relational_op ( ALL | ANY )? subquery )
+	| ( predicate relational_op ( ALL  )? subquery )
 	| ( NOT? EXISTS subquery )
 	| predicate
 ;
 predicate:
 	  ( bit_expr (NOT)? IN (subquery | expression_list) )
 	| ( bit_expr (NOT)? BETWEEN bit_expr AND predicate )
-	| ( bit_expr SOUNDS LIKE bit_expr )
-	| ( bit_expr (NOT)? LIKE simple_expr (ESCAPE simple_expr)? )
+//	| ( bit_expr SOUNDS LIKE bit_expr )
+	| ( bit_expr (NOT)? LIKE simple_expr  )
 	| ( bit_expr (NOT)? REGEXP bit_expr )
 	| ( bit_expr )
 ;
@@ -725,7 +705,7 @@ factor6:
 	(PLUS | MINUS | NEGATION | BINARY) simple_expr
 	| simple_expr ;
 factor7:
-	simple_expr (COLLATE collation_names)?;
+	simple_expr ;
 simple_expr:
 	literal_value
 	| column_spec
@@ -737,17 +717,17 @@ simple_expr:
 	| subquery
 	| EXISTS subquery
 	//| {identifier expression}
-	| match_against_statement
+	//| match_against_statement
 	| case_when_statement
-	| interval_expr
+//	| interval_expr
 ;
 
 
 function_call:
 	  (  functionList ( LPAREN (expression (COMMA expression)*)? RPAREN ) ?  )
 	| (  CAST LPAREN expression AS cast_data_type RPAREN  )
-	| (  CONVERT LPAREN expression COMMA cast_data_type RPAREN  )
-	| (  CONVERT LPAREN expression USING transcoding_name RPAREN  )
+//	| (  CONVERT LPAREN expression COMMA cast_data_type RPAREN  )
+//	| (  CONVERT LPAREN expression USING transcoding_name RPAREN  )
 	| (  group_functions LPAREN ( ASTERISK | ALL | DISTINCT )? bit_expr RPAREN  )
 ;
 
@@ -767,15 +747,16 @@ case_when_statement2:
         END
 ;
 
-match_against_statement:
+/*match_against_statement:
 	MATCH (column_spec (COMMA column_spec)* ) AGAINST (expression (search_modifier)? )
-;
+;*/
 
 column_spec:
 	( ( schema_name DOT )? table_name DOT )? column_name ;
 
 expression_list:
 	LPAREN expression ( COMMA expression )* RPAREN ;
+
 
 interval_expr:
 	INTERVAL expression interval_unit
@@ -793,25 +774,25 @@ table_reference:
 	table_factor1 | table_atom
 ;
 table_factor1:
-	table_factor2 (  (INNER | CROSS)? JOIN table_atom (join_condition)?  )?
+	table_factor2 (  (CROSS)? JOIN table_atom (join_condition)?  )?
 ;
+//table_factor2:
+//	table_factor3 (  STRAIGHT_JOIN table_atom (ON expression)?  )?
+//;
 table_factor2:
-	table_factor3 (  STRAIGHT_JOIN table_atom (ON expression)?  )?
+	table_factor3 (  (LEFT|RIGHT|FULL) (OUTER)? JOIN table_factor3 join_condition  )?
 ;
 table_factor3:
-	table_factor4 (  (LEFT|RIGHT) (OUTER)? JOIN table_factor4 join_condition  )?
-;
-table_factor4:
-	table_atom (  NATURAL ( (LEFT|RIGHT) (OUTER)? )? JOIN table_atom )?
+	table_atom (  ( (LEFT|RIGHT|FULL) (OUTER)? )? JOIN table_atom )?
 ;
 table_atom:
-	  ( table_spec (partition_clause)? (alias)? (index_hint_list)? )
+	  ( table_spec (alias)?  )
 	| ( subquery alias )
 	| ( LPAREN table_references RPAREN )
-	| ( OJ table_reference LEFT OUTER JOIN table_reference ON expression )
+	|  ID
 ;
 join_condition:
-	  (ON expression) | (USING column_list)
+	  ON expression
 ;
 index_hint_list:
 	index_hint (COMMA index_hint)*
@@ -822,7 +803,7 @@ index_options:
 index_hint:
 	  USE    index_options LPAREN (index_list)? RPAREN
 	| IGNORE index_options LPAREN index_list RPAREN
-	| FORCE  index_options LPAREN index_list RPAREN
+//	| FORCE  index_options LPAREN index_list RPAREN
 ;
 index_list:
 	index_name (COMMA index_name)*
@@ -838,25 +819,41 @@ partition_names:	partition_name (COMMA partition_name)* ;
 
 // SQL Statement Syntax -----------------------------------------
 root_statement:
-	(SHIFT_LEFT SHIFT_RIGHT)?
-	( data_manipulation_statements | /*data_definition_statements */  /*| transactional_locking_statements | replication_statements*/ )
+	( data_manipulation_statements | data_definition_statements )
 	(SEMI)?
 ;
 
 data_manipulation_statements:
 	  select_statement
 //	| delete_statements
-//	| insert_statements
-//	| update_statements
+	| insert_statements
+	| update_statements
 
 //	| load_data_statement
-//	| replace_statement
+
 ;
 
 data_definition_statements:
 	  create_database_statement
 //	| alter_database_statements
 	| drop_database_statement
+
+    | create_event_statement
+	| drop_event_statement
+	| grant_event_statement
+	| revoke_event_statement
+	| show_event_statement
+
+	| set_event_statement
+
+
+	| create_table_statement
+    | alter_table_statement
+    | drop_table_statement
+    | drop_view_statement
+	| create_view_statement
+	| alter_view_statement
+	| use_event_statement
 
 ;
 
@@ -865,28 +862,21 @@ data_definition_statements:
 //DQL
 // select ------------------------------------
 select_statement:
-        select_expression ( (UNION (ALL)?) select_expression )*
+        select_expression (  UNION (ALL | DISTINCT)?  select_expression )*
 ;
 
 select_expression:
 	SELECT
-
 	( ALL | DISTINCT  )?
-	(HIGH_PRIORITY)?
-
 	select_list
-
 	(
 		FROM table_references
-		( partition_clause )?
 		( where_clause )?
 		( groupby_clause )?
 		( having_clause )?
 	) ?
-
 	( orderby_clause )?
 	( limit_clause )?
-	( ( FOR UPDATE))?
 ;
 
 where_clause:
@@ -908,7 +898,7 @@ orderby_clause:
 orderby_item:	groupby_item (ASC | DESC)? ;
 
 limit_clause:
-	LIMIT ((offset COMMA)? row_count) | (row_count OFFSET offset)
+	LIMIT ((offset COMMA)? row_count)
 ;
 offset:		INTEGER_NUM ;
 row_count:	INTEGER_NUM ;
@@ -961,7 +951,7 @@ insert_subfix:
 insert_statement:
 		insert_header
     	(column_list)?
-    	select_expression
+    	(select_expression | value_list_clause)
     	( insert_subfix )?
 ;
 
@@ -997,36 +987,35 @@ create_table_statement:
 ;
 
 create_table_statement1:
-	CREATE (TEMPORARY)? TABLE (IF NOT EXISTS)? table_name
+	CREATE (TEMPORARY)? (EXTERNAL)? TABLE (IF NOT EXISTS)?  (database_name DOT)? table_name
 	LPAREN create_definition (COMMA create_definition)* RPAREN
-	(select_statement)?
+	( AS select_statement)?
 ;
 
 create_table_statement2:
-	CREATE (TEMPORARY)? TABLE (IF NOT EXISTS)? table_name
-	select_statement
+	CREATE (TEMPORARY)? (EXTERNAL)? TABLE (IF NOT EXISTS)? table_name
+	AS select_statement
 ;
 
 create_table_statement3:
-	CREATE (TEMPORARY)? TABLE (IF NOT EXISTS)? table_name
+	CREATE (TEMPORARY)? (EXTERNAL)? TABLE (IF NOT EXISTS)? table_name
 	( (LIKE table_name) | (LPAREN LIKE table_name RPAREN) )
 ;
 
 create_definition:
 	  (  column_name column_definition  )
-	| (  (CONSTRAINT (constraintbol_name)?)? PRIMARY KEY (index_type)? LPAREN index_column_name (COMMA index_column_name)* RPAREN (index_option)*  )
+//	| (  (CONSTRAINT (constraintbol_name)?)? PRIMARY KEY (index_type)? LPAREN index_column_name (COMMA index_column_name)* RPAREN (index_option)*  )
 	| (  (INDEX|KEY) (index_name)? (index_type)? LPAREN index_column_name (COMMA index_column_name)* RPAREN (index_option)*  )
-	| (  (CONSTRAINT (constraintbol_name)?)? UNIQUE (INDEX|KEY)? (index_name)? (index_type)? LPAREN index_column_name (COMMA index_column_name)* RPAREN (index_option)*  )
-	| (  (FULLTEXT|SPATIAL) (INDEX|KEY)? (index_name)? LPAREN index_column_name (COMMA index_column_name)* RPAREN (index_option)*  )
-	| (  (CONSTRAINT (constraintbol_name)?)? FOREIGN KEY (index_name)? LPAREN index_column_name (COMMA index_column_name)* RPAREN reference_definition  )
-	| (  CHECK LPAREN expression RPAREN  )
+//	| (  (CONSTRAINT (constraintbol_name)?)? UNIQUE (INDEX|KEY)? (index_name)? (index_type)? LPAREN index_column_name (COMMA index_column_name)* RPAREN (index_option)*  )
+//	| (  (FULLTEXT|SPATIAL) (INDEX|KEY)? (index_name)? LPAREN index_column_name (COMMA index_column_name)* RPAREN (index_option)*  )
+//	| (  (CONSTRAINT (constraintbol_name)?)? FOREIGN KEY (index_name)? LPAREN index_column_name (COMMA index_column_name)* RPAREN reference_definition  )
+//	| (  CHECK LPAREN expression RPAREN  )
 ;
 
 column_definition:
 	column_data_type_header
-	(AUTO_INCREMENT)? ( (UNIQUE (KEY)?) | (PRIMARY (KEY)?) )?
 	(COMMENT TEXT_STRING)?
-	(COLUMN_FORMAT (FIXED|DYNAMIC|DEFAULT))?
+//	(COLUMN_FORMAT (FIXED|DYNAMIC|DEFAULT))?
 	(reference_definition)?
 ;
 
@@ -1035,25 +1024,19 @@ null_or_notnull:
 ;
 
 column_data_type_header:
-	  (  BIT(LPAREN length RPAREN)? (null_or_notnull)? (DEFAULT bit_literal)?  )
-	| (  TINYINT(LPAREN length RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
+	  (  TINYINT(LPAREN length RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
 	| (  SMALLINT(LPAREN length RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
-	| (  MEDIUMINT(LPAREN length RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
 	| (  INT(LPAREN length RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
-	| (  INTEGER(LPAREN length RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
 	| (  BIGINT(LPAREN length RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
 	| (  DOUBLE(LPAREN length COMMA number_literal RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
 	| (  FLOAT(LPAREN length COMMA number_literal RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
 	| (  DECIMAL(LPAREN length( COMMA number_literal)? RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
 	| (  DATE (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
-	| (  TIME (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
 	| (  TIMESTAMP (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
 	| (  DATETIME (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
-	| (  CHAR   (LPAREN length RPAREN)? (CHARACTER SET charset_name)?  (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
-	| (  VARCHAR LPAREN length RPAREN   (CHARACTER SET charset_name)?  (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
-	| (  BINARY   (LPAREN length RPAREN)? (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
-	| (  VARBINARY LPAREN length RPAREN (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
-	| (  SET LPAREN TEXT_STRING (COMMA TEXT_STRING)* RPAREN (CHARACTER SET charset_name)?  (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
+	| (  VARCHAR LPAREN varchar_length RPAREN  (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
+	| (  BINARY   (LPAREN binary_length RPAREN)? (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
+	| (  BOOLEAN    (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
 ;
 
 index_column_name:
@@ -1062,54 +1045,41 @@ index_column_name:
 
 reference_definition:
 	REFERENCES table_name LPAREN index_column_name (COMMA index_column_name)* RPAREN
-	( (MATCH FULL) | (MATCH PARTIAL) | (MATCH SIMPLE) )?
+//	( (MATCH FULL) | (MATCH PARTIAL) )?
 	(ON DELETE reference_option)?
 	(ON UPDATE reference_option)?
 ;
 reference_option:
-	(RESTRICT) | (CASCADE) | (SET NULL) | (NO ACTION)
+	(RESTRICT) | (CASCADE) | (SET NULL)
 ;
 
 length	:	INTEGER_NUM;
-
-
+varchar_length :    VARCHAR_NUM;
+binary_length :     BINARY_NUM;
 
 //---alter table------------------------------------------------------
 alter_table_statement:
-	ALTER (IGNORE)? TABLE table_name
+	ALTER  TABLE table_name
 	( alter_table_specification (COMMA alter_table_specification)* )?
 ;
 alter_table_specification:
-	 ( ADD (COLUMN)? column_name column_definition ( (FIRST|AFTER) column_name )? )
-	| ( ADD (COLUMN)? LPAREN column_definitions RPAREN )
-	| ( ADD (INDEX|KEY) (index_name)? (index_type)? LPAREN index_column_names RPAREN (index_option)* )
-	| ( ADD (CONSTRAINT (constraintbol_name)?)? PRIMARY KEY (index_type)? LPAREN index_column_names RPAREN (index_option)* )
-	|
-		(
-		ADD (CONSTRAINT (constraintbol_name)?)? UNIQUE (INDEX|KEY)? (index_name)?
-		(index_type)? LPAREN index_column_name (COMMA index_column_name)* RPAREN (index_option)*
-		)
-	| ( ADD (CONSTRAINT (constraintbol_name)?)? FOREIGN KEY (index_name)? LPAREN index_column_names RPAREN reference_definition )
-	| ( ALTER (COLUMN)? column_name ((SET DEFAULT literal_value) | (DROP DEFAULT)) )
-	| ( CHANGE (COLUMN)? column_name column_name column_definition (FIRST|AFTER column_name)? )
-	| ( DROP (COLUMN)? column_name )
-	| ( RENAME (TO|AS)? table_name )
-	| ( ORDER BY column_name (COMMA column_name)* )
-//  | ( ADD PARTITION LPAREN partition_definition RPAREN )
-	| ( DROP PARTITION partition_names )
-	| ( TRUNCATE PARTITION (partition_names | ALL) )
+	  ( RENAME TO table_name )
+	| ( CHANGE (COLUMN)? column_name column_name  )
+//	| ( DROP (COLUMN)? column_name )
+//	| ( DROP PARTITION partition_names )
+//	| ( TRUNCATE PARTITION (partition_names | ALL) )
 ;
 index_column_names:
 	index_column_name (COMMA index_column_name)*;
-	
+
 index_type:
-	USING (BTREE | HASH)
+	USING ( HASH)
 ;
 
 index_option:
-	  ( KEY_BLOCK_SIZE (EQ)? INTEGER_NUM )
-	| index_type
-	| ( WITH PARSER parser_name )
+//	  ( KEY_BLOCAIZE (EQ)? INTEGER_NUM )
+	   index_type
+//    | ( WITH PARSER parser_name )
 	| ( COMMENT TEXT_STRING )
 ;
 
@@ -1125,12 +1095,18 @@ rename_table_statement:
 ;
 
 
+
+//----drop table-----------------------------------------------------------------
 drop_table_statement:
-	DROP (TEMPORARY)? TABLE (IF EXISTS)?
-	table_name (COMMA table_name)*
-	(RESTRICT | CASCADE)?
+	DROP  TABLE (IF EXISTS)?
+	table_name
 ;
 
+//----drop view-----------------------------------------------------------------
+drop_view_statement:
+	DROP  VIEW (IF EXISTS)?
+	table_name
+;
 
 truncate_table_statement:
 	TRUNCATE (TABLE)? table_name
@@ -1138,13 +1114,12 @@ truncate_table_statement:
 
 //----create view-----------------------------------------------------------------
 create_view_statement:
-	CREATE (OR REPLACE)?
+	CREATE
 	create_view_body
 ;
 create_view_body:
-	VIEW view_name (LPAREN column_list RPAREN)?
+	VIEW (database_name DOT)? view_name (IF NOT EXISTS)? ( column_list )?
 	AS select_statement
-	(WITH (CASCADED | LOCAL)? )?
 ;
 
 //----alter view-----------------------------------------------------------------
@@ -1153,9 +1128,76 @@ alter_view_statement:
 	create_view_body
 ;
 
-//----drop view-----------------------------------------------------------------
-drop_view_statement:
-	DROP VIEW (IF EXISTS)?
-	view_name (COMMA view_name)*
-	(RESTRICT | CASCADE)?
+
+
+// ---------------------------- create_event_statement --------------------------------------
+create_event_statement:
+	CREATE USER
+	user_name
+	IDENTIFIED BY  ID
+;
+
+// ---------------------------- drop_event_statement--------------------------------------
+drop_event_statement:
+    DROP
+    USER
+    user_name;
+
+// ---------------------------- grant_event_statement--------------------------------------
+grant_event_statement:
+       GRANT
+       priv_type (COMMA priv_type)*
+       ON (table_name | view_name)
+       TO principal_specification (COMMA principal_specification)*
+       (WITH GRANT OPTION)?
+;
+
+principal_specification:
+        USER user_name
+;
+
+
+// ---------------------------- revoke_event_statement--------------------------------------
+revoke_event_statement:
+  REVOKE (GRANT OPTION FOR)?
+      priv_type (COMMA priv_type)*
+      ON (table_name | view_name)
+      FROM principal_specification (principal_specification)*
+
+;
+
+
+// ---------------------------- show_event_statement--------------------------------------
+show_event_statement:
+      SHOW show_specification;
+
+show_specification:
+         CREATE (TABLE | VIEW) (database_name DOT)? table_name
+//    | ABLES (IN database_name)? (IDENTIFIER_WITH_WILDCARDS)?
+       | COLUMNS FROM table_name (FROM database_name)?
+       | (DATABASES | SCHEMAS) LIKE  delimeted_ID
+       | SERVER ALIASES
+       | GRANT (principal_name | principal_specification)  ON  (ALL | TABLE table_name)
+;
+
+
+// ---------------------------- set_event_statement--------------------------------------注意这里面使用root_statement
+set_event_statement:
+     SET TABLE table_name TO server_alias DOT database_name
+;
+
+
+// ---------------------------- use_event_statement--------------------------------------
+use_event_statement:
+    USE database_name
+;
+
+// ---------------------------- service_event_statement--------------------------------------注意这里面使用root_statement
+service_event_statement:
+    SERVER ALIAS server_alias root_statement
+;
+
+//----------------------------update_statement--------------------------------------注意这里面使用root_statement
+update_statements:
+        UPDATE database_name DOT user_name  set_columns_cluase where_clause
 ;
