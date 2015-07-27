@@ -392,17 +392,19 @@ TEXT_STRING:
 
 
 ID:
-	( 'A'..'Z' | 'a'..'z' | '_' | '$') ( 'A'..'Z' | 'a'..'z' | '_' | '$' | '0'..'9' )*
+     ( 'A'..'Z' | 'a'..'z' | '_' | '$' | '0'..'9'| '*' | '%' )+
+;
+
+IDENTIFIER_WITH_WILDCARDS :
+    ( 'A'..'Z' | 'a'..'z' | '0'..'9' | '*' |'%')+
 ;
 
 
 
 
-delimeted_ID:
-'"' ID '"'
-;
 
 
+/*
 USER_VAR:
 	'@' (USER_VAR_SUBFIX1 | USER_VAR_SUBFIX2 | USER_VAR_SUBFIX3 | USER_VAR_SUBFIX4)
 ;
@@ -411,15 +413,14 @@ fragment USER_VAR_SUBFIX2:	( '\'' (~'\'')+ '\'' ) ;
 fragment USER_VAR_SUBFIX3:	( '\"' (~'\"')+ '\"' ) ;
 fragment USER_VAR_SUBFIX4:	( 'A'..'Z' | 'a'..'z' | '_' | '$' | '0'..'9' | DOT )+ ;
 
+*/
+
 WHITE_SPACE	: ( ' '|'\r'|'\t'|'\n' ) -> skip ;
 
 // http://dev.mysql.com/doc/refman/5.6/en/comments.html
 SL_COMMENT	: ( ('--'|'#') ~('\n'|'\r')* '\r'? '\n' ) -> skip ;
 
 
-IDENTIFIER_WITH_WILDCARDS :
-    ( 'A'..'Z' | 'a'..'z' | '0'..'9' | '*' |'%')+
-;
 
 Regex_Escaped_Unicode: ' ' .. '[' | ']' .. '~' | '\u00A0' .. '\uFFFF';
 delimited_statement:
@@ -645,7 +646,7 @@ procedure_name			: any_name ;
 server_name			: any_name ;
 wrapper_name			: any_name ;
 alias				: ( AS )? any_name ;
-password            :  any_name ;
+password            : any_name ;
 server_alias        : any_name ;
 role_name           : any_name ;
 group_name          : any_name ;
@@ -711,7 +712,7 @@ simple_expr:
 	| column_spec
 	| function_call
 	//| param_marker
-	| USER_VAR
+	//| USER_VAR
 	| expression_list
 	| (ROW expression_list)
 	| subquery
@@ -1134,7 +1135,7 @@ alter_view_statement:
 create_event_statement:
 	CREATE USER
 	user_name
-	IDENTIFIED BY  ID
+	IDENTIFIED BY  password
 ;
 
 // ---------------------------- drop_event_statement--------------------------------------
@@ -1153,7 +1154,7 @@ grant_event_statement:
 ;
 
 principal_specification:
-        USER user_name
+        (USER)? user_name
 ;
 
 
@@ -1162,7 +1163,7 @@ revoke_event_statement:
   REVOKE (GRANT OPTION FOR)?
       priv_type (COMMA priv_type)*
       ON (table_name | view_name)
-      FROM principal_specification (principal_specification)*
+      FROM principal_specification ( COMMA principal_specification)*
 
 ;
 
@@ -1175,7 +1176,7 @@ show_specification:
          CREATE (TABLE | VIEW) (database_name DOT)? table_name
 //    | ABLES (IN database_name)? (IDENTIFIER_WITH_WILDCARDS)?
        | COLUMNS FROM table_name (FROM database_name)?
-       | (DATABASES | SCHEMAS) LIKE  delimeted_ID
+       | (DATABASES | SCHEMAS) LIKE  ID     //TODO:这里使用通配符
        | SERVER ALIASES
        | GRANT (principal_name | principal_specification)  ON  (ALL | TABLE table_name)
 ;
