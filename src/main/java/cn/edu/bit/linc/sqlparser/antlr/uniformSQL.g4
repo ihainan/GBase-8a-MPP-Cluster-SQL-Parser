@@ -1,4 +1,4 @@
-grammar uniformSQL;
+grammar zql;
 
 
 fragment A_ :	'a' | 'A';
@@ -315,7 +315,7 @@ COALESCE: C_ O_ A_ L_ E_ S_ C_ E_ ;
 DUPLICATE: D_ U_ P_ L_ I_ C_ A_ T_ E_ ;
 SERVER: S_ E_ R_ V_ E_ R_ ;
 ALIASES: A_ L_ I_ A_ S_ E_ S_ ;
-ALIAS: A_ L_ I_ A_ S_ E_ S_ ;
+ALIAS: A_ L_ I_ A_ S_  ;
 VALUES: V_ A_ L_ U_ E_ S_ ;
 VALUE: V_ A_ L_ U_ E_ ;
 LOW_PRIORITY: L_ O_ W_ '_' P_ R_ I_ O_ R_ I_ T_ Y_ ;
@@ -788,7 +788,7 @@ table_factor3:
 ;
 table_atom:
 	  ( table_spec (alias)?  )
-	| ( subquery alias )
+	| ( subquery (alias)? )
 	| ( LPAREN table_references RPAREN )
 	|  ID
 ;
@@ -826,10 +826,10 @@ root_statement:
 
 data_manipulation_statements:
 	  select_statement
-//	| delete_statements
+	| delete_statements
 	| insert_statements
 	| update_statements
-
+    | server_event_statement
 //	| load_data_statement
 
 ;
@@ -839,10 +839,10 @@ data_definition_statements:
 //	| alter_database_statements
 	| drop_database_statement
 
-    | create_event_statement
-	| drop_event_statement
-	| grant_event_statement
-	| revoke_event_statement
+    | create_user_statement
+	| drop_user_statement
+	| grant_privilege_statement
+	| revoke_privilege_statement
 	| show_event_statement
 
 	| set_event_statement
@@ -989,7 +989,7 @@ create_table_statement:
 
 create_table_statement1:
 	CREATE (TEMPORARY)? (EXTERNAL)? TABLE (IF NOT EXISTS)?  (database_name DOT)? table_name
-	LPAREN create_definition (COMMA create_definition)* RPAREN
+	(LPAREN create_definition (COMMA create_definition)* RPAREN)?
 	( AS select_statement)?
 ;
 
@@ -1132,20 +1132,20 @@ alter_view_statement:
 
 
 // ---------------------------- create_event_statement --------------------------------------
-create_event_statement:
+create_user_statement:
 	CREATE USER
 	user_name
 	IDENTIFIED BY  password
 ;
 
 // ---------------------------- drop_event_statement--------------------------------------
-drop_event_statement:
+drop_user_statement:
     DROP
     USER
     user_name;
 
 // ---------------------------- grant_event_statement--------------------------------------
-grant_event_statement:
+grant_privilege_statement:
        GRANT
        priv_type (COMMA priv_type)*
        ON (table_name | view_name)
@@ -1159,7 +1159,7 @@ principal_specification:
 
 
 // ---------------------------- revoke_event_statement--------------------------------------
-revoke_event_statement:
+revoke_privilege_statement:
   REVOKE (GRANT OPTION FOR)?
       priv_type (COMMA priv_type)*
       ON (table_name | view_name)
@@ -1178,7 +1178,8 @@ show_specification:
        | COLUMNS FROM table_name (FROM database_name)?
        | (DATABASES | SCHEMAS) LIKE  ID     //TODO:这里使用通配符
        | SERVER ALIASES
-       | GRANT (principal_name | principal_specification)  ON  (ALL | TABLE table_name)
+       | TABLES (IN database_name)? (ID)?   //这里也是通配符
+       | GRANT (principal_name | principal_specification)  ON  (ALL | (TABLE)? table_name)
 ;
 
 
@@ -1194,11 +1195,16 @@ use_event_statement:
 ;
 
 // ---------------------------- service_event_statement--------------------------------------注意这里面使用root_statement
-service_event_statement:
+server_event_statement:
     SERVER ALIAS server_alias root_statement
 ;
 
 //----------------------------update_statement--------------------------------------注意这里面使用root_statement
 update_statements:
-        UPDATE database_name DOT user_name  set_columns_cluase where_clause
+        UPDATE (database_name DOT)? user_name  set_columns_cluase where_clause
+;
+
+//------------------------------delete_statements-----------------------------------
+delete_statements:
+    DELETE FROM table_name where_clause
 ;
