@@ -1,4 +1,4 @@
-grammar zql;
+grammar uniformSQL;
 
 
 fragment A_ :	'a' | 'A';
