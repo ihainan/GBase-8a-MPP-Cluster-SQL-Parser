@@ -322,6 +322,7 @@ LOW_PRIORITY: L_ O_ W_ '_' P_ R_ I_ O_ R_ I_ T_ Y_ ;
 HIGH_PRIORITY: H_ I_ G_ H_ '_' P_ R_ I_ O_ R_ I_ T_ Y_ ;
 HASH: H_ A_ S_ H_ ;
 REFERENCES: R_ E_ F_ E_ R_ E_ N_ C_ E_ S_ ;
+
 // basic token definition ------------------------------------------------------------
 
 DIVIDE	: (  D_ I_ V_ ) | '/' ;
@@ -752,7 +753,7 @@ case_when_statement2:
 column_spec:
 	( ( schema_name DOT )? table_name DOT )? (column_name) ;
 
-
+//expresstion without Lparen or Rparen
 raw_expression_list:
      column_name (OR column_name)+
      |column_name (AND column_name)+
@@ -908,8 +909,8 @@ offset:		INTEGER_NUM ;
 row_count:	INTEGER_NUM ;
 
 select_list:
-	 (( displayed_column ( COMMA displayed_column )*)
-	|  ASTERISK)
+	 ( displayed_column ( COMMA displayed_column )*)
+	|  ASTERISK   //TODO:注释这里
 ;
 
 column_list:
@@ -921,7 +922,7 @@ subquery:
 ;
 
 table_spec:
-	( schema_name DOT )? table_name (DOT ASTERISK)?
+	( schema_name DOT )? table_name DOT ASTERISK
 ;
 
 displayed_column :
@@ -992,7 +993,7 @@ create_table_statement:
 
 create_table_statement1:
 	CREATE (TEMPORARY)? (EXTERNAL)? TABLE (IF NOT EXISTS)?  (database_name DOT)? table_name
-	(LPAREN create_definition (COMMA create_definition)* RPAREN)?  COMMENT TEXT_STRING
+	(LPAREN create_definition (COMMA create_definition)* RPAREN)?  (COMMENT TEXT_STRING)?
 	( AS select_statement)?
 ;
 
@@ -1059,7 +1060,7 @@ reference_option:
 
 length	:	INTEGER_NUM;
 varchar_length :    INTEGER_NUM;
-binary_length :     BINARY_NUM;
+binary_length :     INTEGER_NUM;
 
 //---alter table------------------------------------------------------
 alter_table_statement:
@@ -1138,7 +1139,7 @@ alter_view_statement:
 create_user_statement:
 	CREATE USER
 	user_name
-	IDENTIFIED BY  TEXT_STRING
+	IDENTIFIED BY TEXT_STRING
 ;
 
 // ---------------------------- drop_event_statement--------------------------------------
@@ -1179,7 +1180,7 @@ show_specification:
          CREATE (TABLE | VIEW) (database_name DOT)? table_name
 //    | ABLES (IN database_name)? (IDENTIFIER_WITH_WILDCARDS)?
        | COLUMNS FROM table_name (FROM database_name)?
-       | (DATABASES | SCHEMAS) LIKE  TEXT_STRING     //TODO:这里使用通配符
+       | (DATABASES | SCHEMAS) (LIKE  TEXT_STRING)?     //TODO:这里使用通配符
        | SERVER ALIASES
        | TABLES (IN database_name)? (TEXT_STRING)?   //这里也是通配符
        | GRANT (principal_name | principal_specification)?  ON  (ALL | (TABLE)? table_name)
