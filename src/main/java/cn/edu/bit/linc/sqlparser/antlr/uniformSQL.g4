@@ -392,12 +392,9 @@ TEXT_STRING:
 
 
 ID:
-     ( 'A'..'Z' | 'a'..'z' | '_' | '$' | '0'..'9'| '*' | '%' )+
+     ( 'A'..'Z' | 'a'..'z' | '_' | '$' | '0'..'9' )+
 ;
 
-IDENTIFIER_WITH_WILDCARDS :
-    ( 'A'..'Z' | 'a'..'z' | '0'..'9' | '*' |'%')+
-;
 
 
 
@@ -625,6 +622,7 @@ group_functions:
 
 
 
+
 // identifiers --------------------------------------------------------------------------------
 schema_name			: any_name;
 database_name      : any_name ;
@@ -697,9 +695,9 @@ factor1:
 factor2:
 	factor3 ( (SHIFT_LEFT|SHIFT_RIGHT) factor3 )? ;
 factor3:
-	factor4 ( (PLUS|MINUS) factor4 )? ;
+	factor4 ( (PLUS|MINUS) factor4 )* ;
 factor4:
-	factor5 ( (ASTERISK|DIVIDE|MOD|POWER_OP) factor5 )? ;
+	factor5 ( (ASTERISK|DIVIDE|MOD|POWER_OP) factor5 )* ;
 factor5:
 	factor6 ( (PLUS|MINUS) interval_expr )? ;
 factor6:
@@ -714,13 +712,12 @@ simple_expr:
 	//| param_marker
 	//| USER_VAR
 	| expression_list
-	| (ROW expression_list)
+	| raw_expression_list
 	| subquery
 	| EXISTS subquery
 	//| {identifier expression}
 	//| match_against_statement
 	| case_when_statement
-//	| interval_expr
 ;
 
 
@@ -753,7 +750,13 @@ case_when_statement2:
 ;*/
 
 column_spec:
-	( ( schema_name DOT )? table_name DOT )? column_name ;
+	( ( schema_name DOT )? table_name DOT )? (column_name) ;
+
+
+raw_expression_list:
+     column_name (OR column_name)+
+     |column_name (AND column_name)+
+;
 
 expression_list:
 	LPAREN expression ( COMMA expression )* RPAREN ;
@@ -905,8 +908,8 @@ offset:		INTEGER_NUM ;
 row_count:	INTEGER_NUM ;
 
 select_list:
-	( ( displayed_column ( COMMA displayed_column )*)
-	| ASTERISK )
+	 (( displayed_column ( COMMA displayed_column )*)
+	|  ASTERISK)
 ;
 
 column_list:
@@ -918,15 +921,15 @@ subquery:
 ;
 
 table_spec:
-	( schema_name DOT )? table_name
+	( schema_name DOT )? table_name (DOT ASTERISK)?
 ;
 
 displayed_column :
-	( table_spec DOT ASTERISK )
-	|
+	 table_spec
+/*	|
 	( column_spec (alias)? )
 	|
-	( bit_expr (alias)? )
+	( bit_expr (alias)? )  */
 ;
 
 
@@ -989,7 +992,7 @@ create_table_statement:
 
 create_table_statement1:
 	CREATE (TEMPORARY)? (EXTERNAL)? TABLE (IF NOT EXISTS)?  (database_name DOT)? table_name
-	(LPAREN create_definition (COMMA create_definition)* RPAREN)?
+	(LPAREN create_definition (COMMA create_definition)* RPAREN)?  COMMENT TEXT_STRING
 	( AS select_statement)?
 ;
 
@@ -1055,7 +1058,7 @@ reference_option:
 ;
 
 length	:	INTEGER_NUM;
-varchar_length :    VARCHAR_NUM;
+varchar_length :    INTEGER_NUM;
 binary_length :     BINARY_NUM;
 
 //---alter table------------------------------------------------------
@@ -1135,7 +1138,7 @@ alter_view_statement:
 create_user_statement:
 	CREATE USER
 	user_name
-	IDENTIFIED BY  password
+	IDENTIFIED BY  TEXT_STRING
 ;
 
 // ---------------------------- drop_event_statement--------------------------------------
@@ -1176,10 +1179,10 @@ show_specification:
          CREATE (TABLE | VIEW) (database_name DOT)? table_name
 //    | ABLES (IN database_name)? (IDENTIFIER_WITH_WILDCARDS)?
        | COLUMNS FROM table_name (FROM database_name)?
-       | (DATABASES | SCHEMAS) LIKE  ID     //TODO:这里使用通配符
+       | (DATABASES | SCHEMAS) LIKE  TEXT_STRING     //TODO:这里使用通配符
        | SERVER ALIASES
-       | TABLES (IN database_name)? (ID)?   //这里也是通配符
-       | GRANT (principal_name | principal_specification)  ON  (ALL | (TABLE)? table_name)
+       | TABLES (IN database_name)? (TEXT_STRING)?   //这里也是通配符
+       | GRANT (principal_name | principal_specification)?  ON  (ALL | (TABLE)? table_name)
 ;
 
 
