@@ -322,7 +322,13 @@ LOW_PRIORITY: L_ O_ W_ '_' P_ R_ I_ O_ R_ I_ T_ Y_ ;
 HIGH_PRIORITY: H_ I_ G_ H_ '_' P_ R_ I_ O_ R_ I_ T_ Y_ ;
 HASH: H_ A_ S_ H_ ;
 REFERENCES: R_ E_ F_ E_ R_ E_ N_ C_ E_ S_ ;
-
+TO_CHAR: T_ O_ '_' C_ H_ A_ R_;
+DATE_FORMAT: D_ A_ T_ E_ '_' F_ O_ R_ M_ A_ T_;
+SIGNED: S_ I_ G_ N_ E_ D_ ;
+INTEGER: I_ N_ T_ E_ G_ E_ R_ ;
+LENGTH: L_ E_ N_ G_ T_ H_ ;
+REVERSE: R_ E_ V_ E_ R_ S_ E_ ;
+IFNULL: I_ F_ N_ U_ L_ L_ ;
 // basic token definition ------------------------------------------------------------
 
 DIVIDE	: (  D_ I_ V_ ) | '/' ;
@@ -495,10 +501,10 @@ cast_data_type:
 	| CHAR (INTEGER_NUM)?
 	| DATE
 	| DATETIME
-	| DECIMAL ( INTEGER_NUM (COMMA INTEGER_NUM)? )?
-	//| SIGNED (INTEGER)?
+	| DECIMAL (LPAREN INTEGER_NUM (COMMA INTEGER_NUM)? RPAREN )?
+	| SIGNED (INTEGER)?
 	//| TIME
-	//| UNSIGNED (INTEGER)?
+	| UNSIGNED (INTEGER)?
 ;
 
 /*search_modifier:
@@ -561,7 +567,7 @@ functionList:
 	| char_functions
 	| time_functions
 	| other_functions
-	| group_functions
+//	| group_functions
 ;
 
 number_functions:
@@ -593,6 +599,9 @@ char_functions:
 	| TRIM
 	| UCASE
 	| UPPER
+	| TO_CHAR
+	| LENGTH
+	| REVERSE
 ;
 
 time_functions:
@@ -606,10 +615,12 @@ time_functions:
 	| YEAR
 	| DATE_ADD
 	| DATE_SUB
+	| DATE_FORMAT
 ;
 
 other_functions:
     COALESCE
+    |IFNULL
 ;
 
 group_functions:
@@ -785,7 +796,7 @@ table_factor1:
 //	table_factor3 (  STRAIGHT_JOIN table_atom (ON expression)?  )?
 //;
 table_factor2:
-	table_factor3 (  (LEFT|RIGHT|FULL) (OUTER)? JOIN table_factor3 join_condition  )?
+	table_factor3 (  (LEFT|RIGHT|FULL) (OUTER)? JOIN table_factor3 join_condition  )*?
 ;
 table_factor3:
 	table_atom (  ( (LEFT|RIGHT|FULL) (OUTER)? )? JOIN table_atom )?
@@ -922,15 +933,15 @@ subquery:
 ;
 
 table_spec:
-	( schema_name DOT )? table_name DOT ASTERISK
+	( schema_name DOT )? table_name
 ;
 
 displayed_column :
 	 table_spec
-/*	|
+	|
 	( column_spec (alias)? )
 	|
-	( bit_expr (alias)? )  */
+	( bit_expr (alias)? )
 ;
 
 
