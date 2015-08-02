@@ -1,8 +1,7 @@
-// Generated from uniformSQL.g4 by ANTLR 4.5
+// Generated from uniformSQL.g4 by ANTLR 4.5.1
 package cn.edu.bit.linc.sqlparser.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -12,6 +11,30 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * of the available methods.
  */
 public class uniformSQLBaseListener implements uniformSQLListener {
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterKeyword(uniformSQLParser.KeywordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitKeyword(uniformSQLParser.KeywordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDelimited_statement(uniformSQLParser.Delimited_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDelimited_statement(uniformSQLParser.Delimited_statementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -41,18 +64,6 @@ public class uniformSQLBaseListener implements uniformSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCharset_name(uniformSQLParser.Charset_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCharset_name(uniformSQLParser.Charset_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterCast_data_type(uniformSQLParser.Cast_data_typeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -65,30 +76,6 @@ public class uniformSQLBaseListener implements uniformSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSearch_modifier(uniformSQLParser.Search_modifierContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSearch_modifier(uniformSQLParser.Search_modifierContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterTranscoding_name(uniformSQLParser.Transcoding_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTranscoding_name(uniformSQLParser.Transcoding_nameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterInterval_unit(uniformSQLParser.Interval_unitContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -96,18 +83,6 @@ public class uniformSQLBaseListener implements uniformSQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInterval_unit(uniformSQLParser.Interval_unitContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCollation_names(uniformSQLParser.Collation_namesContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCollation_names(uniformSQLParser.Collation_namesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -264,6 +239,18 @@ public class uniformSQLBaseListener implements uniformSQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSchema_name(uniformSQLParser.Schema_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDatabase_name(uniformSQLParser.Database_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDatabase_name(uniformSQLParser.Database_nameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -480,6 +467,90 @@ public class uniformSQLBaseListener implements uniformSQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAlias(uniformSQLParser.AliasContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPassword(uniformSQLParser.PasswordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPassword(uniformSQLParser.PasswordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterServer_alias(uniformSQLParser.Server_aliasContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitServer_alias(uniformSQLParser.Server_aliasContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRole_name(uniformSQLParser.Role_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRole_name(uniformSQLParser.Role_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGroup_name(uniformSQLParser.Group_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGroup_name(uniformSQLParser.Group_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPrincipal_name(uniformSQLParser.Principal_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrincipal_name(uniformSQLParser.Principal_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAny_name(uniformSQLParser.Any_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAny_name(uniformSQLParser.Any_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPriv_type(uniformSQLParser.Priv_typeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPriv_type(uniformSQLParser.Priv_typeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -725,18 +796,6 @@ public class uniformSQLBaseListener implements uniformSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMatch_against_statement(uniformSQLParser.Match_against_statementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMatch_against_statement(uniformSQLParser.Match_against_statementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterColumn_spec(uniformSQLParser.Column_specContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -744,6 +803,18 @@ public class uniformSQLBaseListener implements uniformSQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitColumn_spec(uniformSQLParser.Column_specContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRaw_expression_list(uniformSQLParser.Raw_expression_listContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRaw_expression_list(uniformSQLParser.Raw_expression_listContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -828,18 +899,6 @@ public class uniformSQLBaseListener implements uniformSQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTable_factor3(uniformSQLParser.Table_factor3Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterTable_factor4(uniformSQLParser.Table_factor4Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTable_factor4(uniformSQLParser.Table_factor4Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -1433,6 +1492,30 @@ public class uniformSQLBaseListener implements uniformSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterVarchar_length(uniformSQLParser.Varchar_lengthContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVarchar_length(uniformSQLParser.Varchar_lengthContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBinary_length(uniformSQLParser.Binary_lengthContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBinary_length(uniformSQLParser.Binary_lengthContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAlter_table_statement(uniformSQLParser.Alter_table_statementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1529,6 +1612,18 @@ public class uniformSQLBaseListener implements uniformSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDrop_view_statement(uniformSQLParser.Drop_view_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDrop_view_statement(uniformSQLParser.Drop_view_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterTruncate_table_statement(uniformSQLParser.Truncate_table_statementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1577,13 +1672,145 @@ public class uniformSQLBaseListener implements uniformSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDrop_view_statement(uniformSQLParser.Drop_view_statementContext ctx) { }
+	@Override public void enterCreate_user_statement(uniformSQLParser.Create_user_statementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDrop_view_statement(uniformSQLParser.Drop_view_statementContext ctx) { }
+	@Override public void exitCreate_user_statement(uniformSQLParser.Create_user_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDrop_user_statement(uniformSQLParser.Drop_user_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDrop_user_statement(uniformSQLParser.Drop_user_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGrant_privilege_statement(uniformSQLParser.Grant_privilege_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGrant_privilege_statement(uniformSQLParser.Grant_privilege_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPrincipal_specification(uniformSQLParser.Principal_specificationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrincipal_specification(uniformSQLParser.Principal_specificationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRevoke_privilege_statement(uniformSQLParser.Revoke_privilege_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRevoke_privilege_statement(uniformSQLParser.Revoke_privilege_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterShow_event_statement(uniformSQLParser.Show_event_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitShow_event_statement(uniformSQLParser.Show_event_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterShow_specification(uniformSQLParser.Show_specificationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitShow_specification(uniformSQLParser.Show_specificationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSet_event_statement(uniformSQLParser.Set_event_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSet_event_statement(uniformSQLParser.Set_event_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterUse_event_statement(uniformSQLParser.Use_event_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUse_event_statement(uniformSQLParser.Use_event_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterServer_event_statement(uniformSQLParser.Server_event_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitServer_event_statement(uniformSQLParser.Server_event_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterUpdate_statements(uniformSQLParser.Update_statementsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUpdate_statements(uniformSQLParser.Update_statementsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDelete_statements(uniformSQLParser.Delete_statementsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDelete_statements(uniformSQLParser.Delete_statementsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
