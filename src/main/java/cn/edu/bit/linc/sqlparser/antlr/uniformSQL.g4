@@ -348,7 +348,7 @@ ALL_FIELDS	: '.*' ;
 
 SEMI	: ';' ;
 COLON	: ':' ;
-DOT	: '.' ;
+DOT    	: '.' ;
 COMMA	: ',' ;
 ASTERISK: '*' ;
 RPAREN	: ')' ;
@@ -662,6 +662,7 @@ role_name           : any_name ;
 group_name          : any_name ;
 principal_name      : any_name ;
 
+
 any_name
  : ID
  | keyword
@@ -681,7 +682,7 @@ priv_type:
 ;
 
 // expression statement -------------------------------------------------------------------------------
-expression:	exp_factor1 ( OR exp_factor1 )* ;
+expression:	    exp_factor1 ( OR exp_factor1 )* ;
 exp_factor1:	exp_factor2 ( XOR exp_factor2 )* ;
 exp_factor2:	exp_factor3 ( AND exp_factor3 )* ;
 exp_factor3:	(NOT)? exp_factor4 ;
@@ -920,8 +921,8 @@ offset:		INTEGER_NUM ;
 row_count:	INTEGER_NUM ;
 
 select_list:
-	 ( displayed_column ( COMMA displayed_column )*)
-	|  ASTERISK   //TODO:注释这里
+	  displayed_column ( COMMA displayed_column )*
+	//|   ASTERISK   //TODO:注释这里
 ;
 
 column_list:
@@ -936,8 +937,11 @@ table_spec:
 	( schema_name DOT )? table_name
 ;
 
+
+//-----------displayed_column------------------------
 displayed_column :
-	 table_spec
+      ASTERISK
+	| table_spec DOT ASTERISK      //TODO:实现table.*，但是读不出来
 	|
 	( column_spec (alias)? )
 	|
