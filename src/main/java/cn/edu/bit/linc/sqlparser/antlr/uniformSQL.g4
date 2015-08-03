@@ -344,7 +344,6 @@ GET	: '>=' ;
 SET_VAR	: ':=' ;
 SHIFT_LEFT	: '<<' ;
 SHIFT_RIGHT	: '>>' ;
-ALL_FIELDS	: '.*' ;
 
 SEMI	: ';' ;
 COLON	: ':' ;
@@ -922,7 +921,6 @@ row_count:	INTEGER_NUM ;
 
 select_list:
 	  displayed_column ( COMMA displayed_column )*
-	//|   ASTERISK   //TODO:注释这里
 ;
 
 column_list:
@@ -940,8 +938,8 @@ table_spec:
 
 //-----------displayed_column------------------------
 displayed_column :
-      ASTERISK
-	| table_spec DOT ASTERISK      //TODO:实现table.*，但是读不出来
+       ASTERISK
+	| table_spec  DOT ASTERISK
 	|
 	( column_spec (alias)? )
 	|
@@ -1195,14 +1193,14 @@ show_specification:
          CREATE (TABLE | VIEW) (database_name DOT)? table_name
 //    | ABLES (IN database_name)? (IDENTIFIER_WITH_WILDCARDS)?
        | COLUMNS FROM table_name (FROM database_name)?
-       | (DATABASES | SCHEMAS) (LIKE  TEXT_STRING)?     //TODO:这里使用通配符
+       | (DATABASES | SCHEMAS) (LIKE  TEXT_STRING)?
        | SERVER ALIASES
        | TABLES (IN database_name)? (TEXT_STRING)?   //这里也是通配符
        | GRANT (principal_name | principal_specification)?  ON  (ALL | (TABLE)? table_name)
 ;
 
 
-// ---------------------------- set_event_statement--------------------------------------注意这里面使用root_statement
+// ---------------------------- set_event_statement--------------------------------------
 set_event_statement:
      SET TABLE table_name TO server_alias DOT database_name
 ;
@@ -1213,12 +1211,12 @@ use_event_statement:
     USE database_name
 ;
 
-// ---------------------------- service_event_statement--------------------------------------注意这里面使用root_statement
+// ---------------------------- service_event_statement--------------------------------------
 server_event_statement:
     SERVER ALIAS server_alias root_statement
 ;
 
-//----------------------------update_statement--------------------------------------注意这里面使用root_statement
+//----------------------------update_statement--------------------------------------
 update_statements:
         UPDATE (database_name DOT)? user_name  set_columns_cluase where_clause
 ;
