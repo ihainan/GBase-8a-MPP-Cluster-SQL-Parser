@@ -1,6 +1,5 @@
-// Generated from uniformSQL.g4 by ANTLR 4.5
+// Generated from uniformSQL.g4 by ANTLR 4.5.1
 package cn.edu.bit.linc.sqlparser.antlr;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -8,6 +7,26 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  * {@link uniformSQLParser}.
  */
 public interface uniformSQLListener extends ParseTreeListener {
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#keyword}.
+	 * @param ctx the parse tree
+	 */
+	void enterKeyword(uniformSQLParser.KeywordContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#keyword}.
+	 * @param ctx the parse tree
+	 */
+	void exitKeyword(uniformSQLParser.KeywordContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#delimited_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterDelimited_statement(uniformSQLParser.Delimited_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#delimited_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitDelimited_statement(uniformSQLParser.Delimited_statementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link uniformSQLParser#integer_types}.
 	 * @param ctx the parse tree
@@ -29,16 +48,6 @@ public interface uniformSQLListener extends ParseTreeListener {
 	 */
 	void exitRelational_op(uniformSQLParser.Relational_opContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link uniformSQLParser#charset_name}.
-	 * @param ctx the parse tree
-	 */
-	void enterCharset_name(uniformSQLParser.Charset_nameContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link uniformSQLParser#charset_name}.
-	 * @param ctx the parse tree
-	 */
-	void exitCharset_name(uniformSQLParser.Charset_nameContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link uniformSQLParser#cast_data_type}.
 	 * @param ctx the parse tree
 	 */
@@ -49,26 +58,6 @@ public interface uniformSQLListener extends ParseTreeListener {
 	 */
 	void exitCast_data_type(uniformSQLParser.Cast_data_typeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link uniformSQLParser#search_modifier}.
-	 * @param ctx the parse tree
-	 */
-	void enterSearch_modifier(uniformSQLParser.Search_modifierContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link uniformSQLParser#search_modifier}.
-	 * @param ctx the parse tree
-	 */
-	void exitSearch_modifier(uniformSQLParser.Search_modifierContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link uniformSQLParser#transcoding_name}.
-	 * @param ctx the parse tree
-	 */
-	void enterTranscoding_name(uniformSQLParser.Transcoding_nameContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link uniformSQLParser#transcoding_name}.
-	 * @param ctx the parse tree
-	 */
-	void exitTranscoding_name(uniformSQLParser.Transcoding_nameContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link uniformSQLParser#interval_unit}.
 	 * @param ctx the parse tree
 	 */
@@ -78,16 +67,6 @@ public interface uniformSQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitInterval_unit(uniformSQLParser.Interval_unitContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link uniformSQLParser#collation_names}.
-	 * @param ctx the parse tree
-	 */
-	void enterCollation_names(uniformSQLParser.Collation_namesContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link uniformSQLParser#collation_names}.
-	 * @param ctx the parse tree
-	 */
-	void exitCollation_names(uniformSQLParser.Collation_namesContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link uniformSQLParser#string_literal}.
 	 * @param ctx the parse tree
@@ -218,6 +197,16 @@ public interface uniformSQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSchema_name(uniformSQLParser.Schema_nameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#database_name}.
+	 * @param ctx the parse tree
+	 */
+	void enterDatabase_name(uniformSQLParser.Database_nameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#database_name}.
+	 * @param ctx the parse tree
+	 */
+	void exitDatabase_name(uniformSQLParser.Database_nameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link uniformSQLParser#table_name}.
 	 * @param ctx the parse tree
@@ -398,6 +387,76 @@ public interface uniformSQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAlias(uniformSQLParser.AliasContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#password}.
+	 * @param ctx the parse tree
+	 */
+	void enterPassword(uniformSQLParser.PasswordContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#password}.
+	 * @param ctx the parse tree
+	 */
+	void exitPassword(uniformSQLParser.PasswordContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#server_alias}.
+	 * @param ctx the parse tree
+	 */
+	void enterServer_alias(uniformSQLParser.Server_aliasContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#server_alias}.
+	 * @param ctx the parse tree
+	 */
+	void exitServer_alias(uniformSQLParser.Server_aliasContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#role_name}.
+	 * @param ctx the parse tree
+	 */
+	void enterRole_name(uniformSQLParser.Role_nameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#role_name}.
+	 * @param ctx the parse tree
+	 */
+	void exitRole_name(uniformSQLParser.Role_nameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#group_name}.
+	 * @param ctx the parse tree
+	 */
+	void enterGroup_name(uniformSQLParser.Group_nameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#group_name}.
+	 * @param ctx the parse tree
+	 */
+	void exitGroup_name(uniformSQLParser.Group_nameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#principal_name}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrincipal_name(uniformSQLParser.Principal_nameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#principal_name}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrincipal_name(uniformSQLParser.Principal_nameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#any_name}.
+	 * @param ctx the parse tree
+	 */
+	void enterAny_name(uniformSQLParser.Any_nameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#any_name}.
+	 * @param ctx the parse tree
+	 */
+	void exitAny_name(uniformSQLParser.Any_nameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#priv_type}.
+	 * @param ctx the parse tree
+	 */
+	void enterPriv_type(uniformSQLParser.Priv_typeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#priv_type}.
+	 * @param ctx the parse tree
+	 */
+	void exitPriv_type(uniformSQLParser.Priv_typeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link uniformSQLParser#expression}.
 	 * @param ctx the parse tree
@@ -599,16 +658,6 @@ public interface uniformSQLListener extends ParseTreeListener {
 	 */
 	void exitCase_when_statement2(uniformSQLParser.Case_when_statement2Context ctx);
 	/**
-	 * Enter a parse tree produced by {@link uniformSQLParser#match_against_statement}.
-	 * @param ctx the parse tree
-	 */
-	void enterMatch_against_statement(uniformSQLParser.Match_against_statementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link uniformSQLParser#match_against_statement}.
-	 * @param ctx the parse tree
-	 */
-	void exitMatch_against_statement(uniformSQLParser.Match_against_statementContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link uniformSQLParser#column_spec}.
 	 * @param ctx the parse tree
 	 */
@@ -618,6 +667,16 @@ public interface uniformSQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitColumn_spec(uniformSQLParser.Column_specContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#raw_expression_list}.
+	 * @param ctx the parse tree
+	 */
+	void enterRaw_expression_list(uniformSQLParser.Raw_expression_listContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#raw_expression_list}.
+	 * @param ctx the parse tree
+	 */
+	void exitRaw_expression_list(uniformSQLParser.Raw_expression_listContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link uniformSQLParser#expression_list}.
 	 * @param ctx the parse tree
@@ -688,16 +747,6 @@ public interface uniformSQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTable_factor3(uniformSQLParser.Table_factor3Context ctx);
-	/**
-	 * Enter a parse tree produced by {@link uniformSQLParser#table_factor4}.
-	 * @param ctx the parse tree
-	 */
-	void enterTable_factor4(uniformSQLParser.Table_factor4Context ctx);
-	/**
-	 * Exit a parse tree produced by {@link uniformSQLParser#table_factor4}.
-	 * @param ctx the parse tree
-	 */
-	void exitTable_factor4(uniformSQLParser.Table_factor4Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link uniformSQLParser#table_atom}.
 	 * @param ctx the parse tree
@@ -1189,6 +1238,26 @@ public interface uniformSQLListener extends ParseTreeListener {
 	 */
 	void exitLength(uniformSQLParser.LengthContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#varchar_length}.
+	 * @param ctx the parse tree
+	 */
+	void enterVarchar_length(uniformSQLParser.Varchar_lengthContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#varchar_length}.
+	 * @param ctx the parse tree
+	 */
+	void exitVarchar_length(uniformSQLParser.Varchar_lengthContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#binary_length}.
+	 * @param ctx the parse tree
+	 */
+	void enterBinary_length(uniformSQLParser.Binary_lengthContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#binary_length}.
+	 * @param ctx the parse tree
+	 */
+	void exitBinary_length(uniformSQLParser.Binary_lengthContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link uniformSQLParser#alter_table_statement}.
 	 * @param ctx the parse tree
 	 */
@@ -1269,6 +1338,16 @@ public interface uniformSQLListener extends ParseTreeListener {
 	 */
 	void exitDrop_table_statement(uniformSQLParser.Drop_table_statementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#drop_view_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterDrop_view_statement(uniformSQLParser.Drop_view_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#drop_view_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitDrop_view_statement(uniformSQLParser.Drop_view_statementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link uniformSQLParser#truncate_table_statement}.
 	 * @param ctx the parse tree
 	 */
@@ -1309,13 +1388,123 @@ public interface uniformSQLListener extends ParseTreeListener {
 	 */
 	void exitAlter_view_statement(uniformSQLParser.Alter_view_statementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link uniformSQLParser#drop_view_statement}.
+	 * Enter a parse tree produced by {@link uniformSQLParser#create_user_statement}.
 	 * @param ctx the parse tree
 	 */
-	void enterDrop_view_statement(uniformSQLParser.Drop_view_statementContext ctx);
+	void enterCreate_user_statement(uniformSQLParser.Create_user_statementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link uniformSQLParser#drop_view_statement}.
+	 * Exit a parse tree produced by {@link uniformSQLParser#create_user_statement}.
 	 * @param ctx the parse tree
 	 */
-	void exitDrop_view_statement(uniformSQLParser.Drop_view_statementContext ctx);
+	void exitCreate_user_statement(uniformSQLParser.Create_user_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#drop_user_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterDrop_user_statement(uniformSQLParser.Drop_user_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#drop_user_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitDrop_user_statement(uniformSQLParser.Drop_user_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#grant_privilege_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterGrant_privilege_statement(uniformSQLParser.Grant_privilege_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#grant_privilege_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitGrant_privilege_statement(uniformSQLParser.Grant_privilege_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#principal_specification}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrincipal_specification(uniformSQLParser.Principal_specificationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#principal_specification}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrincipal_specification(uniformSQLParser.Principal_specificationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#revoke_privilege_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterRevoke_privilege_statement(uniformSQLParser.Revoke_privilege_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#revoke_privilege_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitRevoke_privilege_statement(uniformSQLParser.Revoke_privilege_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#show_event_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterShow_event_statement(uniformSQLParser.Show_event_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#show_event_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitShow_event_statement(uniformSQLParser.Show_event_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#show_specification}.
+	 * @param ctx the parse tree
+	 */
+	void enterShow_specification(uniformSQLParser.Show_specificationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#show_specification}.
+	 * @param ctx the parse tree
+	 */
+	void exitShow_specification(uniformSQLParser.Show_specificationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#set_event_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterSet_event_statement(uniformSQLParser.Set_event_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#set_event_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitSet_event_statement(uniformSQLParser.Set_event_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#use_event_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterUse_event_statement(uniformSQLParser.Use_event_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#use_event_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitUse_event_statement(uniformSQLParser.Use_event_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#server_event_statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterServer_event_statement(uniformSQLParser.Server_event_statementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#server_event_statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitServer_event_statement(uniformSQLParser.Server_event_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#update_statements}.
+	 * @param ctx the parse tree
+	 */
+	void enterUpdate_statements(uniformSQLParser.Update_statementsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#update_statements}.
+	 * @param ctx the parse tree
+	 */
+	void exitUpdate_statements(uniformSQLParser.Update_statementsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link uniformSQLParser#delete_statements}.
+	 * @param ctx the parse tree
+	 */
+	void enterDelete_statements(uniformSQLParser.Delete_statementsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link uniformSQLParser#delete_statements}.
+	 * @param ctx the parse tree
+	 */
+	void exitDelete_statements(uniformSQLParser.Delete_statementsContext ctx);
 }
