@@ -1,6 +1,5 @@
 grammar uniformSQL;
 
-
 fragment A_ :	'a' | 'A';
 fragment B_ :	'b' | 'B';
 fragment C_ :	'c' | 'C';
@@ -29,9 +28,314 @@ fragment Y_ :	'y' | 'Y';
 fragment Z_ :	'z' | 'Z';
 
 keyword
- : USE
+ : TRUE
+ | FALSE
+ | ALL
+ | NOT
+ | LIKE
+ | IF
+ | EXISTS
+ | ASC
+ | DESC
+ | ORDER
+ | GROUP
+ | BY
+ | HAVING
+ | WHERE
+ | FROM
+ | AS
+ | SELECT
+ | DISTINCT
+ | INSERT
+ | OVERWRITE
+ | OUTER
+ | UNIQUEJOIN
+ | PRESERVE
+ | JOIN
+ | LEFT
+ | RIGHT
+ | FULL
+ | ON
+ | PARTITION
+ | PARTITIONS
+ | TABLE
+ | TABLES
+ | COLUMNS
+ | INDEX
+ | INDEXES
+ | REBUILD
+ | FUNCTIONS
+ | SHOW
+ | MSCK
+ | REPAIR
+ | DIRECTORY
+ | LOCAL
+ | TRANSFORM
+ | USING
+ | CLUSTER
+ | DISTRIBUTE
+ | SORT
+ | UNION
+ | LOAD
+ | EXPORT
+ | IMPORT
+ | DATA
+ | INPATH
+ | IS
+ | NULL
+ | CREATE
+ | EXTERNAL
+ | ALTER
+ | CHANGE
+ | COLUMN
+ | FIRST
+ | AFTER
+ | DESCRIBE
+ | DROP
+ | RENAME
+ | IGNORE
+ | PROTECTION
+ | TO
+ | COMMENT
+ | BOOLEAN
+ | TINYINT
+ | SMALLINT
+ | INT
+ | BIGINT
+ | FLOAT
+ | DOUBLE
+ | DATE
+ | DATETIME
+ | TIMESTAMP
+ | DECIMAL
+ | STRING
+ | VARCHAR
+ | ARRAY
+ | STRUCT
+ | MAP
+ | UNIONTYPE
+ | REDUCE
+ | PARTITIONED
+ | CLUSTERED
+ | SORTED
+ | INTO
+ | BUCKETS
+ | ROW
+ | ROWS
+ | FORMAT
+ | DELIMITED
+ | FIELDS
+ | TERMINATED
+ | ESCAPED
+ | COLLECTION
+ | ITEMS
+ | KEYS
+ | KEY
+ | LINES
+ | STORED
+ | FILEFORMAT
+ | SEQUENCEFILE
+ | TEXTFILE
+ | RCFILE
+ | ORCFILE
+ | INPUTFORMAT
+ | OUTPUTFORMAT
+ | INPUTDRIVER
+ | OUTPUTDRIVER
+ | OFFLINE
+ | ENABLE
+ | DEFAULT
+ | DISABLE
+ | READONLY
+ | LOCATION
+ | TABLESAMPLE
+ | BUCKET
+ | OUT
+ | OF
+ | PERCENT
+ | CAST
+ | ADD
+ | REPLACE
+ | RLIKE
+ | REGEXP
+ | TEMPORARY
+ | FUNCTION
+ | MACRO
+ | EXPLAIN
+ | EXTENDED
+ | FORMATTED
+ | PRETTY
+ | DEPENDENCY
+ | LOGICAL
+ | SERDE
+ | WITH
+ | DEFERRED
+ | SERDEPROPERTIES
+ | DBPROPERTIES
+ | LIMIT
+ | SET
+ | UNSET
+ | TBLPROPERTIES
+ | IDXPROPERTIES
+ | CASCADED
+ | CASE
+ | WHEN
+ | THEN
+ | ELSE
+ | END
+ | MAPJOIN
+ | STREAMTABLE
+ | CLUSTERSTATUS
+ | UTC
+ | LONG
+ | DELETE
+ | FETCH
+ | INTERSECT
+ | VIEW
+ | IN
+ | DATABASE
+ | DATABASES
+ | MATERIALIZED
+ | SCHEMA
+ | SCHEMAS
+ | GRANT
+ | REVOKE
+ | SSL
+ | UNDO
+ | LOCK
+ | LOCKS
+ | UNLOCK
+ | SHARED
+ | EXCLUSIVE
+ | PROCEDURE
+ | UNSIGNED
+ | WHILE
+ | READ
+ | READS
+ | PURGE
+ | RANGE
+ | ANALYZE
+ | BEFORE
+ | BETWEEN
+ | BOTH
+ | BINARY
+ | CROSS
+ | CONTINUE
+ | CURSOR
+ | TRIGGER
+ | RECORDREADER
+ | RECORDWRITER
+ | LATERAL
+ | TOUCH
+ | ARCHIVE
+ | UNARCHIVE
+ | COMPUTE
+ | STATISTICS
+ | USE
+ | OPTION
+ | CONCATENATE
+ | UPDATE
+ | RESTRICT
+ | CASCADE
+ | SKEWED
+ | ROLLUP
+ | CUBE
+ | DIRECTORIES
+ | FOR
+ | WINDOW
+ | UNBOUNDED
+ | PRECEDING
+ | FOLLOWING
+ | CURRENT
+ | LESS
+ | MORE
+ | OVER
+ | GROUPING
+ | SETS
+ | TRUNCATE
+ | NOSCAN
+ | PARTIALSCAN
  | USER
+ | ROLE
+ | INNER
+ | EXCHANGE
+ | IDENTIFIED
+ | CHAR
+ | ABS
+ | ACOS
+ | ASIN
+ | ATAN
+ | CEIL
+ | COS
+ | COT
+ | EXP
+ | FLOOR
+ | LN
+ | POW
+ | RAND
+ | ROUND
+ | SIN
+ | SQRT
+ | TAN
+ | LCASE
+ | LOWER
+ | LTRIM
+ | RTRIM
+ | CONCAT
+ | SUBSTR
+ | TRIM
+ | UCASE
+ | UPPER
+ | INTERVAL
+ | TO_DATE
+ | DAY
+ | HOUR
+ | MINUTE
+ | MONTH
+ | SECOND
+ | FROM_UNIXTIME
+ | YEAR
+ | DATE_ADD
+ | DATE_SUB
+ | COLLATE
+ | AVG
+ | COUNT
+ | MAX
+ | MIN
+ | SUM
+ | COALESCE
+ | DUPLICATE
+ | SERVER
+ | ALIASES
+ | ALIAS
+ | VALUES
+ | VALUE
+ | LOW_PRIORITY
+ | HIGH_PRIORITY
+ | HASH
+ | REFERENCES
+ | TO_CHAR
+ | DATE_FORMAT
+ | SIGNED
+ | INTEGER
+ | LENGTH
+ | REVERSE
+ | IFNULL
+ | DIVIDE
+ | MOD
+ | OR
+ | AND
+ | XOR
+ | ARROW
+ | EQ
+ | NOT_EQ
+ | LET
+ | GET
+ | SET_VAR
+ | SHIFT_LEFT
+ | SHIFT_RIGHT
  ;
+
 
 TRUE : 	T_ R_ U_ E_ ;
 FALSE : F_ A_ L_ S_ E_ ;
@@ -401,7 +705,13 @@ ID:
      ( 'A'..'Z' | 'a'..'z' | '_' | '$' | '0'..'9' )+
 ;
 
+LINE_COMMENT
+    :   '//' ~[\r\n]* -> skip
+    ;
 
+BLOCKCOMMENT
+    :   '/*' .*? '*/' -> skip
+;
 
 
 
@@ -665,6 +975,7 @@ principal_name      : any_name ;
 any_name
  : ID
  | keyword
+ | string_literal
  ;
 
 
@@ -790,19 +1101,17 @@ table_reference:
 	table_factor1 | table_atom
 ;
 table_factor1:
-	table_factor2 (  (CROSS)? JOIN table_atom (join_condition)?  )?
+	table_factor2  ((CROSS)? (LEFT|RIGHT|FULL)? (OUTER)? JOIN table_atom (join_condition)? )*
 ;
-//table_factor2:
-//	table_factor3 (  STRAIGHT_JOIN table_atom (ON expression)?  )?
-//;
+
 table_factor2:
-	table_factor3 (  (LEFT|RIGHT|FULL) (OUTER)? JOIN table_factor3 join_condition  )*?
+	table_factor3 (  (LEFT|RIGHT|FULL) (OUTER)? JOIN table_factor3 join_condition  )*
 ;
 table_factor3:
-	table_atom (  ( (LEFT|RIGHT|FULL) (OUTER)? )? JOIN table_atom )?
+	table_atom (alias)?  (( (LEFT|RIGHT|FULL) (OUTER)? )? JOIN table_atom )?
 ;
 table_atom:
-	  ( table_spec (alias)?  )
+	  ( table_spec (alias)?)
 	| ( subquery (alias)? )
 	| ( LPAREN table_references RPAREN )
 	|  ID
