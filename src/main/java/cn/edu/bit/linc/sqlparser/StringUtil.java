@@ -46,12 +46,13 @@ public class StringUtil {
 
     public static class RegexStringTool {
         public static String removeNumberSignAndDoubleDashComment(String sqlLine){
-            return sqlLine.replaceAll("-- .*$", "").replaceAll("#.*$", "");
+            return sqlLine.replaceAll("--.*$", "").replaceAll("#.*$", "");
 
         }
 
         public static String removeComments(String sqlCommand) {
-            return sqlCommand.replaceAll("(?://.*)|(/\\*(?:.|[\\n\\r])*?\\*/)", "");
+            // return sqlCommand.replaceAll("(?://.*)|(/\\*(?:.|[\\n\\r])*?\\*/)", "");
+            return sqlCommand;
         }
     }
 

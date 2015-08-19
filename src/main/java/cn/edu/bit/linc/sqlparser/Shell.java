@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 public class Shell {
     private String user, password, inputQuery, fileName;
     private final String commandTerminator = ";";
+    private static int num = 1;
 
     public void doInputSQLCommand() {
         /* 确定输入源 */
@@ -85,6 +86,8 @@ public class Shell {
                     query.append("\n");
                     query.append(line);
                 }
+
+                System.out.println((num++) + ": " + query);
 
                 // 删除注释
                 String queryStr = StringUtil.RegexStringTool.removeComments(query.toString().replaceAll("\n", " "));
