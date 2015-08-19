@@ -976,6 +976,7 @@ any_name
  : ID
  | keyword
  | string_literal
+ | function_call
  ;
 
 
@@ -1077,8 +1078,10 @@ column_spec:
 
 //expresstion without Lparen or Rparen
 raw_expression_list:
-     column_name (OR column_name)+
-     |column_name (AND column_name)+
+       column_name (OR column_name)+
+     | column_name (AND column_name)+
+
+     function_call
 ;
 
 expression_list:
@@ -1229,7 +1232,7 @@ offset:		INTEGER_NUM ;
 row_count:	INTEGER_NUM ;
 
 select_list:
-	  displayed_column ( COMMA displayed_column )*
+	  displayed_column (  COMMA displayed_column )*
 ;
 
 column_list:
@@ -1532,5 +1535,5 @@ update_statements:
 
 //------------------------------delete_statements-----------------------------------
 delete_statements:
-    DELETE FROM table_name where_clause
+    DELETE FROM table_name (where_clause)?
 ;
