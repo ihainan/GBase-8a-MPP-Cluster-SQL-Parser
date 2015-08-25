@@ -178,8 +178,6 @@ keyword
  | TBLPROPERTIES
  | IDXPROPERTIES
  | CASCADED
- | CASE
- | WHEN
  | THEN
  | ELSE
  | END
@@ -1060,7 +1058,7 @@ case_when_statement1:
         CASE
         ( WHEN expression THEN bit_expr )+
         ( ELSE bit_expr )?
-        END
+        END alias
 ;
 case_when_statement2:
         CASE bit_expr
@@ -1078,7 +1076,7 @@ column_spec:
 
 //expresstion without Lparen or Rparen
 raw_expression_list:
-       column_name (OR column_name)+
+       column_name (OR column_spec)+
      | column_name (AND column_name)+
 
      function_call
@@ -1252,10 +1250,9 @@ table_spec:
 displayed_column :
        ASTERISK
 	| table_spec  DOT ASTERISK
-	|
-	( column_spec (alias)? )
-	|
-	( bit_expr (alias)? )
+	| ( column_spec (alias)? )
+	| ( bit_expr (alias)? )
+	// (column_spec IS NULL OR function_call relational_op INTEGER_NUM THEN any_name OR column_spec ELSE column_spec END AS any_name)?   (not flexible)
 ;
 
 
