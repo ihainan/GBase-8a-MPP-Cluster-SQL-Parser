@@ -332,6 +332,9 @@ keyword
  | SET_VAR
  | SHIFT_LEFT
  | SHIFT_RIGHT
+ | CASE
+ | WHEN
+ | END
  ;
 
 
@@ -964,7 +967,7 @@ server_name			: any_name ;
 wrapper_name			: any_name ;
 alias				: ( AS )? any_name ;
 password            : any_name ;
-server_alias        : any_name ;
+server_alias_name        : any_name ;
 role_name           : any_name ;
 group_name          : any_name ;
 principal_name      : any_name ;
@@ -1058,7 +1061,7 @@ case_when_statement1:
         CASE
         ( WHEN expression THEN bit_expr )+
         ( ELSE bit_expr )?
-        END alias
+        END (alias)?
 ;
 case_when_statement2:
         CASE bit_expr
@@ -1072,14 +1075,13 @@ case_when_statement2:
 ;*/
 
 column_spec:
-	( ( schema_name DOT )? table_name DOT )? (column_name) ;
+	( table_spec DOT )? column_name ;
 
 //expresstion without Lparen or Rparen
 raw_expression_list:
        column_name (OR column_spec)+
      | column_name (AND column_name)+
 
-     function_call
 ;
 
 expression_list:
@@ -1242,7 +1244,7 @@ subquery:
 ;
 
 table_spec:
-	( schema_name DOT )? table_name
+	( schema_name DOT )?  table_name
 ;
 
 
@@ -1314,19 +1316,19 @@ create_table_statement:
 ;
 
 create_table_statement1:
-	CREATE (TEMPORARY)? (EXTERNAL)? TABLE (IF NOT EXISTS)?  (database_name DOT)? table_name
+	CREATE (TEMPORARY)? (EXTERNAL)? TABLE (IF NOT EXISTS)?  table_spec
 	(LPAREN create_definition (COMMA create_definition)* RPAREN)?  (COMMENT TEXT_STRING)?
 	( AS select_statement)?
 ;
 
 create_table_statement2:
-	CREATE (TEMPORARY)? (EXTERNAL)? TABLE (IF NOT EXISTS)? table_name
+	CREATE (TEMPORARY)? (EXTERNAL)? TABLE (IF NOT EXISTS)? table_spec
 	AS select_statement
 ;
 
 create_table_statement3:
-	CREATE (TEMPORARY)? (EXTERNAL)? TABLE (IF NOT EXISTS)? table_name
-	( (LIKE table_name) | (LPAREN LIKE table_name RPAREN) )
+	CREATE (TEMPORARY)? (EXTERNAL)? TABLE (IF NOT EXISTS)? table_spec
+	( (LIKE table_spec) | (LPAREN LIKE table_spec RPAREN) )
 ;
 
 create_definition:
@@ -1371,7 +1373,7 @@ index_column_name:
 ;
 
 reference_definition:
-	REFERENCES table_name LPAREN index_column_name (COMMA index_column_name)* RPAREN
+	REFERENCES table_spec LPAREN index_column_name (COMMA index_column_name)* RPAREN
 //	( (MATCH FULL) | (MATCH PARTIAL) )?
 	(ON DELETE reference_option)?
 	(ON UPDATE reference_option)?
@@ -1386,11 +1388,11 @@ binary_length :     INTEGER_NUM;
 
 //---alter table------------------------------------------------------
 alter_table_statement:
-	ALTER  TABLE table_name
+	ALTER  TABLE  table_spec
 	( alter_table_specification (COMMA alter_table_specification)* )?
 ;
 alter_table_specification:
-	  ( RENAME TO table_name )
+	  ( RENAME TO table_spec )
 	| ( CHANGE (COLUMN)? column_name column_name  )
 //	| ( DROP (COLUMN)? column_name )
 //	| ( DROP PARTITION partition_names )
@@ -1417,8 +1419,8 @@ column_definitions:
 
 rename_table_statement:
 	RENAME TABLE
-	table_name TO table_name
-	(COMMA table_name TO table_name)*
+	table_spec TO table_spec
+	(COMMA table_spec TO table_spec)*
 ;
 
 
@@ -1426,17 +1428,17 @@ rename_table_statement:
 //----drop table-----------------------------------------------------------------
 drop_table_statement:
 	DROP  TABLE (IF EXISTS)?
-	table_name
+	table_spec
 ;
 
 //----drop view-----------------------------------------------------------------
 drop_view_statement:
 	DROP  VIEW (IF EXISTS)?
-	table_name
+	table_spec
 ;
 
 truncate_table_statement:
-	TRUNCATE (TABLE)? table_name
+	TRUNCATE (TABLE)? table_spec
 ;
 
 //----create view-----------------------------------------------------------------
@@ -1474,7 +1476,7 @@ drop_user_statement:
 grant_privilege_statement:
        GRANT
        priv_type (COMMA priv_type)*
-       ON (table_name | view_name)
+       ON (table_spec | view_name)
        TO principal_specification (COMMA principal_specification)*
        (WITH GRANT OPTION)?
 ;
@@ -1488,7 +1490,7 @@ principal_specification:
 revoke_privilege_statement:
   REVOKE (GRANT OPTION FOR)?
       priv_type (COMMA priv_type)*
-      ON (table_name | view_name)
+      ON (table_spec | view_name)
       FROM principal_specification ( COMMA principal_specification)*
 
 ;
@@ -1499,19 +1501,19 @@ show_event_statement:
       SHOW show_specification;
 
 show_specification:
-         CREATE (TABLE | VIEW) (database_name DOT)? table_name
+         CREATE (TABLE | VIEW) table_spec
 //    | ABLES (IN database_name)? (IDENTIFIER_WITH_WILDCARDS)?
-       | COLUMNS FROM table_name (FROM database_name)?
+       | COLUMNS FROM table_spec
        | (DATABASES | SCHEMAS) (LIKE  TEXT_STRING)?
        | SERVER ALIASES
        | TABLES (IN database_name)? (TEXT_STRING)?   //这里也是通配符
-       | GRANT (principal_name | principal_specification)?  ON  (ALL | (TABLE)? table_name)
+       | GRANT (principal_name | principal_specification)?  ON  (ALL | (TABLE)? table_spec)
 ;
 
 
 // ---------------------------- set_event_statement--------------------------------------
 set_event_statement:
-     SET TABLE table_name TO server_alias DOT database_name
+     SET TABLE table_spec TO server_alias_name DOT database_name
 ;
 
 
@@ -1522,15 +1524,16 @@ use_event_statement:
 
 // ---------------------------- service_event_statement--------------------------------------
 server_event_statement:
-    SERVER ALIAS server_alias root_statement
+    SERVER ALIAS server_alias_name root_statement
 ;
 
 //----------------------------update_statement--------------------------------------
 update_statements:
-        UPDATE (database_name DOT)? user_name  set_columns_cluase where_clause
+        UPDATE table_spec  set_columns_cluase where_clause
 ;
 
 //------------------------------delete_statements-----------------------------------
 delete_statements:
-    DELETE FROM table_name (where_clause)?
+    DELETE FROM table_spec (where_clause)?
 ;
+
