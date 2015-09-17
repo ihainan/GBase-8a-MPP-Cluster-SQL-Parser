@@ -337,7 +337,7 @@ keyword
  | END
  ;
 
-
+// KEYWORD
 TRUE : 	T_ R_ U_ E_ ;
 FALSE : F_ A_ L_ S_ E_ ;
 ALL : A_ L_ L_ ;
@@ -693,7 +693,7 @@ REAL_NUMBER:
 ;
 
 TEXT_STRING:
-	( N_ | ('_' U_ T_ F_ '8') )?
+//( N_ | ('_' U_ T_ F_ '8') )?
 	(
 		(  '\'' ( ('\\' '\\') | ('\'' '\'') | ('\\' '\'') | ~('\'') )* '\''  )
 		|
@@ -710,7 +710,7 @@ LINE_COMMENT
     :   '//' ~[\r\n]* -> skip
     ;
 
-BLOCKCOMMENT
+BLOCK_COMMENT
     :   '/*' .*? '*/' -> skip
 ;
 
@@ -1007,7 +1007,6 @@ bool_primary:
 predicate:
 	  ( bit_expr (NOT)? IN (subquery | expression_list) )
 	| ( bit_expr (NOT)? BETWEEN bit_expr AND predicate )
-//	| ( bit_expr SOUNDS LIKE bit_expr )
 	| ( bit_expr (NOT)? LIKE simple_expr  )
 	| ( bit_expr (NOT)? REGEXP bit_expr )
 	| ( bit_expr )
@@ -1033,14 +1032,10 @@ simple_expr:
 	literal_value
 	| column_spec
 	| function_call
-	//| param_marker
-	//| USER_VAR
 	| expression_list
 	| raw_expression_list
 	| subquery
 	| EXISTS subquery
-	//| {identifier expression}
-	//| match_against_statement
 	| case_when_statement
 ;
 
@@ -1151,6 +1146,7 @@ data_manipulation_statements:
 	| insert_statements
 	| update_statements
     | server_event_statement
+
 //	| load_data_statement
 
 ;
@@ -1171,7 +1167,7 @@ data_definition_statements:
     | drop_view_statement
 	| create_view_statement
 	| alter_view_statement
-	| use_event_statement
+    | use_event_statement
 
 ;
 
