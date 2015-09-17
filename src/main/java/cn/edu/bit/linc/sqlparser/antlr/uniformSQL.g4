@@ -807,13 +807,12 @@ relational_op:
 	| UTF8;
 */
 cast_data_type:
-	BINARY (INTEGER_NUM)?
+	  BINARY (INTEGER_NUM)?
 	| CHAR (INTEGER_NUM)?
 	| DATE
 	| DATETIME
 	| DECIMAL (LPAREN INTEGER_NUM (COMMA INTEGER_NUM)? RPAREN )?
 	| SIGNED (INTEGER)?
-	//| TIME
 	| UNSIGNED (INTEGER)?
 ;
 
@@ -1049,8 +1048,6 @@ simple_expr:
 function_call:
 	  (  functionList ( LPAREN (expression (COMMA expression)*)? RPAREN ) ?  )
 	| (  CAST LPAREN expression AS cast_data_type RPAREN  )
-//	| (  CONVERT LPAREN expression COMMA cast_data_type RPAREN  )
-//	| (  CONVERT LPAREN expression USING transcoding_name RPAREN  )
 	| (  group_functions LPAREN ( ASTERISK | ALL | DISTINCT )? bit_expr RPAREN  )
 ;
 
@@ -1070,9 +1067,7 @@ case_when_statement2:
         END
 ;
 
-/*match_against_statement:
-	MATCH (column_spec (COMMA column_spec)* ) AGAINST (expression (search_modifier)? )
-;*/
+
 
 column_spec:
 	( table_spec DOT )? column_name ;
@@ -1131,7 +1126,6 @@ index_options:
 index_hint:
 	  USE    index_options LPAREN (index_list)? RPAREN
 	| IGNORE index_options LPAREN index_list RPAREN
-//	| FORCE  index_options LPAREN index_list RPAREN
 ;
 index_list:
 	index_name (COMMA index_name)*
@@ -1165,16 +1159,12 @@ data_definition_statements:
 	  create_database_statement
 //	| alter_database_statements
 	| drop_database_statement
-
     | create_user_statement
 	| drop_user_statement
 	| grant_privilege_statement
 	| revoke_privilege_statement
 	| show_event_statement
-
 	| set_event_statement
-
-
 	| create_table_statement
     | alter_table_statement
     | drop_table_statement
@@ -1254,7 +1244,6 @@ displayed_column :
 	| table_spec  DOT ASTERISK
 	| ( column_spec (alias)? )
 	| ( bit_expr (alias)? )
-	// (column_spec IS NULL OR function_call relational_op INTEGER_NUM THEN any_name OR column_spec ELSE column_spec END AS any_name)?   (not flexible)
 ;
 
 
@@ -1333,18 +1322,13 @@ create_table_statement3:
 
 create_definition:
 	  (  column_name column_definition  )
-//	| (  (CONSTRAINT (constraintbol_name)?)? PRIMARY KEY (index_type)? LPAREN index_column_name (COMMA index_column_name)* RPAREN (index_option)*  )
 	| (  (INDEX|KEY) (index_name)? (index_type)? LPAREN index_column_name (COMMA index_column_name)* RPAREN (index_option)*  )
-//	| (  (CONSTRAINT (constraintbol_name)?)? UNIQUE (INDEX|KEY)? (index_name)? (index_type)? LPAREN index_column_name (COMMA index_column_name)* RPAREN (index_option)*  )
-//	| (  (FULLTEXT|SPATIAL) (INDEX|KEY)? (index_name)? LPAREN index_column_name (COMMA index_column_name)* RPAREN (index_option)*  )
-//	| (  (CONSTRAINT (constraintbol_name)?)? FOREIGN KEY (index_name)? LPAREN index_column_name (COMMA index_column_name)* RPAREN reference_definition  )
-//	| (  CHECK LPAREN expression RPAREN  )
+
 ;
 
 column_definition:
 	column_data_type_header
 	(COMMENT TEXT_STRING)?
-//	(COLUMN_FORMAT (FIXED|DYNAMIC|DEFAULT))?
 	(reference_definition)?
 ;
 
@@ -1406,9 +1390,7 @@ index_type:
 ;
 
 index_option:
-//	  ( KEY_BLOCAIZE (EQ)? INTEGER_NUM )
 	   index_type
-//    | ( WITH PARSER parser_name )
 	| ( COMMENT TEXT_STRING )
 ;
 
