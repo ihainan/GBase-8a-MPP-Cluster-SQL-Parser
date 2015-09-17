@@ -335,15 +335,16 @@ keyword
  | CASE
  | WHEN
  | END
+ | CHARACTER
  ;
 
-// KEYWORD
+
 TRUE : 	T_ R_ U_ E_ ;
 FALSE : F_ A_ L_ S_ E_ ;
 ALL : A_ L_ L_ ;
 NOT : N_ O_ T_ | '!';
 LIKE : L_ I_ K_ E_ ;
-
+CHARACTER : C_ H_ A_ R_ A_ C_ T_ E_ R_;
 IF : I_ F_ ;
 EXISTS : E_ X_ I_ S_ T_ S_ ;
 
@@ -546,7 +547,6 @@ STATISTICS: S_ T_ A_ T_ I_ S_ T_ I_ C_ S_ ;
 USE: U_ S_ E_ ;
 OPTION: O_ P_ T_ I_ O_ N_ ;
 CONCATENATE: C_ O_ N_ C_ A_ T_ E_ N_ A_ T_ E_ ;
- //SHOW_DATABASE: S_ H_ O_ W_ __ D_ A_ T_ A_ B_ A_ S_ E_ ;
 UPDATE: U_ P_ D_ A_ T_ E_ ;
 RESTRICT: R_ E_ S_ T_ R_ I_ C_ T_ ;
 CASCADE: C_ A_ S_ C_ A_ D_ E_ ;
@@ -634,8 +634,45 @@ INTEGER: I_ N_ T_ E_ G_ E_ R_ ;
 LENGTH: L_ E_ N_ G_ T_ H_ ;
 REVERSE: R_ E_ V_ E_ R_ S_ E_ ;
 IFNULL: I_ F_ N_ U_ L_ L_ ;
-// basic token definition ------------------------------------------------------------
 
+/*ARMSCII8
+ASCII
+BIG5
+CP1250
+CP1251
+CP1256
+CP1257
+CP850
+CP852
+CP866
+CP932
+DEC8
+EUCJPMS
+EUCKR
+GB2312
+GBK
+GEOSTD8
+GREEK
+HEBREW
+HP8
+KEYBCS2
+KOI8R
+KOI8U
+LATIN1
+LATIN2
+LATIN5
+LATIN7
+ MACCE
+	| MACROMAN
+	| SJIS
+	| SWE7
+	| TIS620
+	| UCS2
+	| UJIS
+	| UTF8
+*/
+
+// basic token definition ------------------------------------------------------------
 DIVIDE	: (  D_ I_ V_ ) | '/' ;
 MOD	: (  M_ O_ D_ ) | '%' ;
 OR	: (  O_ R_ ) | '||';
@@ -681,11 +718,13 @@ HEX_DIGIT:
 	(  'X' '\'' (HEX_DIGIT_FRAGMENT)+ '\''  )
 ;
 
+/*
 BIT_NUM:
 	(  '0b'    ('0'|'1')+  )
 	|
 	(  B_ '\'' ('0'|'1')+ '\''  )
 ;
+*/
 
 REAL_NUMBER:
 	(  INTEGER_NUM DOT INTEGER_NUM | INTEGER_NUM DOT | DOT INTEGER_NUM | INTEGER_NUM  )
@@ -693,7 +732,7 @@ REAL_NUMBER:
 ;
 
 TEXT_STRING:
-//( N_ | ('_' U_ T_ F_ '8') )?
+	( N_ | ('_' U_ T_ F_ '8') )?
 	(
 		(  '\'' ( ('\\' '\\') | ('\'' '\'') | ('\\' '\'') | ~('\'') )* '\''  )
 		|
@@ -731,7 +770,7 @@ fragment USER_VAR_SUBFIX4:	( 'A'..'Z' | 'a'..'z' | '_' | '$' | '0'..'9' | DOT )+
 
 WHITE_SPACE	: ( ' '|'\r'|'\t'|'\n' ) -> skip ;
 
-// http://dev.mysql.com/doc/refman/5.6/en/comments.html
+//
 SL_COMMENT	: ( ('--'|'#') ~('\n'|'\r')* '\r'? '\n' ) -> skip ;
 
 
@@ -804,10 +843,11 @@ relational_op:
 	| TIS620
 	| UCS2
 	| UJIS
-	| UTF8;
+	| UTF8
+;
 */
 cast_data_type:
-	  BINARY (INTEGER_NUM)?
+	BINARY (INTEGER_NUM)?
 	| CHAR (INTEGER_NUM)?
 	| DATE
 	| DATETIME
@@ -815,29 +855,21 @@ cast_data_type:
 	| SIGNED (INTEGER)?
 	| UNSIGNED (INTEGER)?
 ;
+	//| TIME
 
-/*search_modifier:
-	(IN NATURAL LANGUAGE MODE)
-	| (IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION)
-	| (IN BOOLEAN MODE)
-	| (WITH QUERY EXPANSION)
-;
 
-transcoding_name:
-	  LATIN1
-	| UTF8
-;
-*/
 
 interval_unit:
 	  SECOND
 	| MINUTE
 	| HOUR
 	| DAY
-//	| WEEK
 	| MONTH
-//	| QUARTER
 	| YEAR
+
+
+//	| WEEK
+//	| QUARTER
 /*	| SECOND_MICROSECOND
 	| MINUTE_MICROSECOND
 	| MINUTE_SECOND
@@ -860,17 +892,18 @@ collation_names:
 // basic const data definition ---------------------------------------------------------------
 string_literal:		TEXT_STRING ;
 number_literal:		(PLUS | MINUS)? (INTEGER_NUM | REAL_NUMBER) ;
-//date_time_literal: 	;
+
+//date_time_literal---------------------------------------------------------------------------
 hex_literal:		HEX_DIGIT;
 boolean_literal:	TRUE | FALSE ;
-bit_literal:		BIT_NUM;
+//bit_literal:		BIT_NUM;
 
 literal_value:
-        ( string_literal | number_literal | hex_literal | boolean_literal | bit_literal | NULL ) ;
+        ( string_literal | number_literal | hex_literal | boolean_literal  | NULL ) ;  /*bit_literal*/
 
 
 
-// function defintion ----------------------------------------------------------------------------------
+// function defintion -------------------------------------------------------------------------
 functionList:
 	  number_functions
 	| char_functions
@@ -1063,7 +1096,6 @@ case_when_statement2:
 ;
 
 
-
 column_spec:
 	( table_spec DOT )? column_name ;
 
@@ -1143,10 +1175,9 @@ root_statement:
 data_manipulation_statements:
 	  select_statement
 	| delete_statements
-	| insert_statements
+	| insert_statement
 	| update_statements
     | server_event_statement
-
 //	| load_data_statement
 
 ;
@@ -1155,19 +1186,22 @@ data_definition_statements:
 	  create_database_statement
 //	| alter_database_statements
 	| drop_database_statement
+
     | create_user_statement
 	| drop_user_statement
 	| grant_privilege_statement
 	| revoke_privilege_statement
 	| show_event_statement
 	| set_event_statement
+
+
 	| create_table_statement
     | alter_table_statement
     | drop_table_statement
     | drop_view_statement
 	| create_view_statement
 	| alter_view_statement
-    | use_event_statement
+	| use_event_statement
 
 ;
 
@@ -1248,8 +1282,12 @@ displayed_column :
 
 //DML
 // insert --------------------------------
-insert_statements :
-	insert_statement
+
+insert_statement:
+		insert_header
+    	(column_list)?
+    	(select_expression | value_list_clause)
+    	( insert_subfix )?
 ;
 
 insert_header:
@@ -1262,12 +1300,6 @@ insert_subfix:
 	ON DUPLICATE KEY UPDATE column_spec EQ expression (COMMA column_spec EQ expression)*
 ;
 
-insert_statement:
-		insert_header
-    	(column_list)?
-    	(select_expression | value_list_clause)
-    	( insert_subfix )?
-;
 
 value_list_clause:	(VALUES | VALUE) column_value_list (COMMA column_value_list)*;
 column_value_list:	LPAREN (bit_expr|DEFAULT) (COMMA (bit_expr|DEFAULT) )* RPAREN ;
@@ -1282,20 +1314,20 @@ set_column_cluase:	column_spec EQ (expression|DEFAULT) ;
 
 
 //DCL
-// ----------------------------------------create databases--------------------------------------------------------
+// ----------------------------------------create databases--------------------------------------------------
 create_database_statement:
-	CREATE (DATABASE | SCHEMA) (IF NOT EXISTS)? schema_name
+	CREATE (DATABASE | SCHEMA) (IF NOT EXISTS)? database_name   /*(SET charset_name)?*/
 	//( create_specification (COMMA create_specification)* )*
 ;
 
 
 drop_database_statement:
-	DROP (DATABASE | SCHEMA) (IF EXISTS)? schema_name
+	DROP (DATABASE | SCHEMA) (IF EXISTS)? database_name
 ;
 
 
 
-// ----------------------------------------create table--------------------------------------------------------
+// ----------------------------------------create table-------------------------------------------------------
 create_table_statement:
 	create_table_statement1 | create_table_statement2 | create_table_statement3
 ;
@@ -1354,7 +1386,6 @@ index_column_name:
 
 reference_definition:
 	REFERENCES table_spec LPAREN index_column_name (COMMA index_column_name)* RPAREN
-//	( (MATCH FULL) | (MATCH PARTIAL) )?
 	(ON DELETE reference_option)?
 	(ON UPDATE reference_option)?
 ;
@@ -1366,6 +1397,14 @@ length	:	INTEGER_NUM;
 varchar_length :    INTEGER_NUM;
 binary_length :     INTEGER_NUM;
 
+
+//---alter database------------------------------------------------------
+/*
+alter_database_statements:
+    ALTER DATABASE database_name CHARACTER SET charset_name
+;
+*/
+
 //---alter table------------------------------------------------------
 alter_table_statement:
 	ALTER  TABLE  table_spec
@@ -1374,9 +1413,7 @@ alter_table_statement:
 alter_table_specification:
 	  ( RENAME TO table_spec )
 	| ( CHANGE (COLUMN)? column_name column_name  )
-//	| ( DROP (COLUMN)? column_name )
-//	| ( DROP PARTITION partition_names )
-//	| ( TRUNCATE PARTITION (partition_names | ALL) )
+
 ;
 index_column_names:
 	index_column_name (COMMA index_column_name)*;
@@ -1470,7 +1507,6 @@ revoke_privilege_statement:
       priv_type (COMMA priv_type)*
       ON (table_spec | view_name)
       FROM principal_specification ( COMMA principal_specification)*
-
 ;
 
 
@@ -1480,12 +1516,12 @@ show_event_statement:
 
 show_specification:
          CREATE (TABLE | VIEW) table_spec
-//    | ABLES (IN database_name)? (IDENTIFIER_WITH_WILDCARDS)?
        | COLUMNS FROM table_spec
        | (DATABASES | SCHEMAS) (LIKE  TEXT_STRING)?
        | SERVER ALIASES
        | TABLES (IN database_name)? (TEXT_STRING)?   //这里也是通配符
        | GRANT (principal_name | principal_specification)?  ON  (ALL | (TABLE)? table_spec)
+     //  | VARIABLES LIKE TEXT_STRING
 ;
 
 
