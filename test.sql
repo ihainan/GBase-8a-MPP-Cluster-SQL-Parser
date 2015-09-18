@@ -1,5 +1,3 @@
-/*单用户分析的应用类型维度查询（15min粒度，跨度2天）---IMSI:46000000219486*/
-/* todo 6个表 需要根据生成的数据进行修改*/
 SELECT a.timegra
 	,to_char(a.apn)
 	,to_char(a.imsi)
