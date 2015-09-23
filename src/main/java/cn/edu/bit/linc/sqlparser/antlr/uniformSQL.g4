@@ -336,6 +336,8 @@ keyword
  | WHEN
  | END
  | CHARACTER
+ | HEX
+ | CONV
  ;
 
 
@@ -634,7 +636,8 @@ INTEGER: I_ N_ T_ E_ G_ E_ R_ ;
 LENGTH: L_ E_ N_ G_ T_ H_ ;
 REVERSE: R_ E_ V_ E_ R_ S_ E_ ;
 IFNULL: I_ F_ N_ U_ L_ L_ ;
-
+HEX: H_ E_ X_;
+CONV: C_ O_ N_ V_;
 /*ARMSCII8
 ASCII
 BIG5
@@ -944,6 +947,8 @@ char_functions:
 	| TO_CHAR
 	| LENGTH
 	| REVERSE
+	| HEX
+	| CONV
 ;
 
 time_functions:
@@ -1076,7 +1081,7 @@ simple_expr:
 function_call:
 	  (  functionList ( LPAREN (expression (COMMA expression)*)? RPAREN ) ?  )
 	| (  CAST LPAREN expression AS cast_data_type RPAREN  )
-	| (  group_functions LPAREN ( ASTERISK | ALL | DISTINCT )? bit_expr RPAREN  )
+	| (  group_functions LPAREN ( ALL | DISTINCT )?  (ASTERISK | bit_expr) RPAREN )     //fix count(*)
 ;
 
 case_when_statement:
@@ -1174,43 +1179,49 @@ root_statement:
 
 data_manipulation_statements:
 	  select_statement
-	| delete_statements
 	| insert_statement
 	| update_statements
+	| delete_statements
     | server_event_statement
 //	| load_data_statement
-
 ;
 
 data_definition_statements:
-	  create_database_statement
-//	| alter_database_statements
-	| drop_database_statement
-
-    | create_user_statement
-	| drop_user_statement
-	| grant_privilege_statement
-	| revoke_privilege_statement
+      create_statement
+    | drop_statement
+    | privilege_alter_statement
 	| show_event_statement
 	| set_event_statement
-
-
-	| create_table_statement
-    | alter_table_statement
-    | drop_table_statement
-    | drop_view_statement
-	| create_view_statement
-	| alter_view_statement
 	| use_event_statement
+//	| alter_database_statements
+;
 
+create_statement:
+      create_database_statement
+    | create_user_statement
+    | create_table_statement
+	| create_view_statement
 ;
 
 
+drop_statement:
+      drop_database_statement
+	| drop_user_statement
+    | drop_table_statement
+    | drop_view_statement
+;
+
+privilege_alter_statement:
+      grant_privilege_statement
+	| revoke_privilege_statement
+    | alter_table_statement
+	| alter_view_statement
+;
 
 //DQL
 // select ------------------------------------
 select_statement:
-        select_expression (  UNION (ALL | DISTINCT)?  select_expression )*
+      (LPAREN)?  select_expression (RPAREN)? (  UNION (ALL | DISTINCT)?  (LPAREN)? select_expression (RPAREN)? )*
 ;
 
 select_expression:
@@ -1232,8 +1243,9 @@ where_clause:
 ;
 
 groupby_clause:
-	GROUP BY groupby_item (COMMA groupby_item)* (WITH ROLLUP)?
+	GROUP BY groupby_item (COMMA groupby_item)*
 ;
+
 groupby_item:	column_spec | INTEGER_NUM | bit_expr ;
 
 having_clause:
@@ -1287,18 +1299,18 @@ insert_statement:
 		insert_header
     	(column_list)?
     	(select_expression | value_list_clause)
-    	( insert_subfix )?
+    //	( insert_subfix )?
 ;
 
 insert_header:
-	INSERT (LOW_PRIORITY | HIGH_PRIORITY)? (IGNORE)?
+	INSERT
 	(INTO)? table_spec
 	(partition_clause)?
 ;
 
-insert_subfix:
+/*insert_subfix:
 	ON DUPLICATE KEY UPDATE column_spec EQ expression (COMMA column_spec EQ expression)*
-;
+;*/
 
 
 value_list_clause:	(VALUES | VALUE) column_value_list (COMMA column_value_list)*;
@@ -1321,15 +1333,9 @@ create_database_statement:
 ;
 
 
-drop_database_statement:
-	DROP (DATABASE | SCHEMA) (IF EXISTS)? database_name
-;
-
-
-
 // ----------------------------------------create table-------------------------------------------------------
 create_table_statement:
-	create_table_statement1 | create_table_statement2 | create_table_statement3
+	create_table_statement1 | create_table_statement2
 ;
 
 create_table_statement1:
@@ -1338,26 +1344,26 @@ create_table_statement1:
 	( AS select_statement)?
 ;
 
+/*
 create_table_statement2:
 	CREATE (TEMPORARY)? (EXTERNAL)? TABLE (IF NOT EXISTS)? table_spec
 	AS select_statement
-;
+;*/
 
-create_table_statement3:
+create_table_statement2:
 	CREATE (TEMPORARY)? (EXTERNAL)? TABLE (IF NOT EXISTS)? table_spec
-	( (LIKE table_spec) | (LPAREN LIKE table_spec RPAREN) )
+    (LPAREN)? LIKE table_spec (RPAREN)?
 ;
 
 create_definition:
 	  (  column_name column_definition  )
-	| (  (INDEX|KEY) (index_name)? (index_type)? LPAREN index_column_name (COMMA index_column_name)* RPAREN (index_option)*  )
-
 ;
+//	| (  (INDEX|KEY) (index_name)? (index_type)? LPAREN index_column_name (COMMA index_column_name)* RPAREN (index_option)*  )
 
 column_definition:
 	column_data_type_header
 	(COMMENT TEXT_STRING)?
-	(reference_definition)?
+//	(reference_definition)?    //需求目前没有该要求
 ;
 
 null_or_notnull:
@@ -1365,33 +1371,33 @@ null_or_notnull:
 ;
 
 column_data_type_header:
-	  (  TINYINT(LPAREN length RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
-	| (  SMALLINT(LPAREN length RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
-	| (  INT(LPAREN length RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
-	| (  BIGINT(LPAREN length RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
-	| (  DOUBLE(LPAREN length COMMA number_literal RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
-	| (  FLOAT(LPAREN length COMMA number_literal RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
-	| (  DECIMAL(LPAREN length( COMMA number_literal)? RPAREN)? (UNSIGNED)?  (null_or_notnull)? (DEFAULT number_literal)?  )
-	| (  DATE (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
-	| (  TIMESTAMP (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
-	| (  DATETIME (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
-	| (  VARCHAR LPAREN varchar_length RPAREN  (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
-	| (  BINARY   (LPAREN binary_length RPAREN)? (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
-	| (  BOOLEAN    (null_or_notnull)? (DEFAULT TEXT_STRING)?  )
+	  (  TINYINT(LPAREN length RPAREN)?  (null_or_notnull)? )    // 目前需求没说支持(UNSIGNED)? 和 (DEFAULT number_literal)?
+	| (  SMALLINT(LPAREN length RPAREN)?  (null_or_notnull)? )
+	| (  INT(LPAREN length RPAREN)?   (null_or_notnull)? )
+	| (  BIGINT(LPAREN length RPAREN)?   (null_or_notnull)? )
+	| (  DOUBLE(LPAREN length COMMA number_literal RPAREN)?  (null_or_notnull)? )
+	| (  FLOAT(LPAREN length COMMA number_literal RPAREN)?  (null_or_notnull)? )
+	| (  DECIMAL(LPAREN length( COMMA number_literal)? RPAREN)?  (null_or_notnull)? )
+	| (  DATE (null_or_notnull)?  )
+	| (  TIMESTAMP (null_or_notnull)? )
+	| (  DATETIME (null_or_notnull)? )
+	| (  VARCHAR LPAREN varchar_length RPAREN  (null_or_notnull)? )
+	| (  BINARY  (LPAREN binary_length RPAREN)? (null_or_notnull)? )
+	| (  BOOLEAN (null_or_notnull)?  )
 ;
 
 index_column_name:
 	column_name (LPAREN INTEGER_NUM RPAREN)? (ASC | DESC)?
 ;
 
-reference_definition:
+/*reference_definition:
 	REFERENCES table_spec LPAREN index_column_name (COMMA index_column_name)* RPAREN
 	(ON DELETE reference_option)?
 	(ON UPDATE reference_option)?
 ;
 reference_option:
 	(RESTRICT) | (CASCADE) | (SET NULL)
-;
+;*/
 
 length	:	INTEGER_NUM;
 varchar_length :    INTEGER_NUM;
@@ -1410,11 +1416,13 @@ alter_table_statement:
 	ALTER  TABLE  table_spec
 	( alter_table_specification (COMMA alter_table_specification)* )?
 ;
+
 alter_table_specification:
 	  ( RENAME TO table_spec )
 	| ( CHANGE (COLUMN)? column_name column_name  )
 
 ;
+
 index_column_names:
 	index_column_name (COMMA index_column_name)*;
 
@@ -1439,21 +1447,33 @@ rename_table_statement:
 ;
 
 
+//----drop database-----------------------------------------------------------------
+drop_database_statement:
+	DROP (DATABASE | SCHEMA) (IF EXISTS)? database_name
+;
 
 //----drop table-----------------------------------------------------------------
 drop_table_statement:
-	DROP  TABLE (IF EXISTS)?
+	DROP TABLE (IF EXISTS)?
 	table_spec
 ;
 
 //----drop view-----------------------------------------------------------------
 drop_view_statement:
-	DROP  VIEW (IF EXISTS)?
+	DROP VIEW (IF EXISTS)?
 	table_spec
 ;
 
-truncate_table_statement:
+/*:
 	TRUNCATE (TABLE)? table_spec
+;
+*/
+
+// ---------------------------- drop_uder_statement--------------------------------------
+drop_user_statement:
+    DROP
+    USER
+    user_name
 ;
 
 //----create view-----------------------------------------------------------------
@@ -1481,11 +1501,7 @@ create_user_statement:
 	IDENTIFIED BY TEXT_STRING
 ;
 
-// ---------------------------- drop_event_statement--------------------------------------
-drop_user_statement:
-    DROP
-    USER
-    user_name;
+
 
 // ---------------------------- grant_event_statement--------------------------------------
 grant_privilege_statement:
@@ -1503,7 +1519,7 @@ principal_specification:
 
 // ---------------------------- revoke_event_statement--------------------------------------
 revoke_privilege_statement:
-  REVOKE (GRANT OPTION FOR)?
+      REVOKE (GRANT OPTION FOR)?
       priv_type (COMMA priv_type)*
       ON (table_spec | view_name)
       FROM principal_specification ( COMMA principal_specification)*
@@ -1517,21 +1533,21 @@ show_event_statement:
 show_specification:
          CREATE (TABLE | VIEW) table_spec
        | COLUMNS FROM table_spec
-       | (DATABASES | SCHEMAS) (LIKE  TEXT_STRING)?
+       | (DATABASES | SCHEMAS) (LIKE TEXT_STRING)?
+       | TABLES (IN database_name)? (TEXT_STRING)?
+       | GRANT (principal_name | principal_specification)? ON (ALL | (TABLE)? table_spec)
        | SERVER ALIASES
-       | TABLES (IN database_name)? (TEXT_STRING)?   //这里也是通配符
-       | GRANT (principal_name | principal_specification)?  ON  (ALL | (TABLE)? table_spec)
-     //  | VARIABLES LIKE TEXT_STRING
+     //  | VARIABLES LIKE TEXT_STRING    charset
 ;
 
 
-// ---------------------------- set_event_statement--------------------------------------
+// ---------------------------- set_database_statement--------------------------------------
 set_event_statement:
      SET TABLE table_spec TO server_alias_name DOT database_name
 ;
 
 
-// ---------------------------- use_event_statement--------------------------------------
+// ---------------------------- use_database_statement--------------------------------------
 use_event_statement:
     USE database_name
 ;
