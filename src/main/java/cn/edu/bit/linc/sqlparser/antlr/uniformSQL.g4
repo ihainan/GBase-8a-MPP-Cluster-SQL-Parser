@@ -1131,14 +1131,14 @@ table_reference:
 	table_factor1 | table_atom
 ;
 table_factor1:
-	table_factor2  ((CROSS)? (LEFT|RIGHT|FULL)? (OUTER)? JOIN table_atom (join_condition)? )*
+	table_factor2  ( (CROSS | INNER)? JOIN table_atom (join_condition)? )*
 ;
 
 table_factor2:
 	table_factor3 (  (LEFT|RIGHT|FULL) (OUTER)? JOIN table_factor3 join_condition  )*
 ;
 table_factor3:
-	table_atom (alias)?  (( (LEFT|RIGHT|FULL) (OUTER)? )? JOIN table_atom )?
+	table_atom  (( (LEFT|RIGHT|FULL) (OUTER)? )? JOIN table_atom )?
 ;
 table_atom:
 	  ( table_spec (alias)?)
