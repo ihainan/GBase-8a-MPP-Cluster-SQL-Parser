@@ -1064,11 +1064,11 @@ factor5:
 factor6:
 	(PLUS | MINUS | NEGATION | BINARY) simple_expr
 	| simple_expr ;
-factor7:
-	simple_expr ;
+
 simple_expr:
-	literal_value
+	  literal_value
 	| column_spec
+	| interval_expr
 	| function_call
 	| expression_list
 	| raw_expression_list
@@ -1363,11 +1363,12 @@ create_definition:
 column_definition:
 	column_data_type_header
 	(COMMENT TEXT_STRING)?
-//	(reference_definition)?    //需求目前没有该要求
 ;
+//	(reference_definition)?    //需求目前没有该要求
+
 
 null_or_notnull:
-	(NOT NULL) | NULL
+	(NOT NULL) | (NULL)
 ;
 
 column_data_type_header:
