@@ -42,7 +42,6 @@ keyword
  | BY
  | HAVING
  | WHERE
- | FROM
  | AS
  | SELECT
  | DISTINCT
@@ -1102,7 +1101,7 @@ case_when_statement2:
 
 
 column_spec:
-	( table_spec DOT )? column_name ;
+	(schema_name DOT)? ( table_name DOT )? column_name ;
 
 //expresstion without Lparen or Rparen
 raw_expression_list:
@@ -1283,8 +1282,8 @@ table_spec:
 //-----------displayed_column------------------------
 displayed_column :
        ASTERISK
-	| table_spec  DOT ASTERISK
-	| ( column_spec (alias)? )
+    | (column_spec (alias)? )      //fix the order of | table_spec  DOT ASTERISK and | ( column_spec (alias)? )
+	| (table_spec  DOT ASTERISK )
 	| ( bit_expr (alias)? )
 ;
 
