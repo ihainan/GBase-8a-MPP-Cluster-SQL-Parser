@@ -1,4 +1,4 @@
-grammar uniformSQL;
+grammar zql;
 
 fragment A_ :	'a' | 'A';
 fragment B_ :	'b' | 'B';
@@ -1101,7 +1101,8 @@ case_when_statement2:
 
 
 column_spec:
-	(schema_name DOT)? ( table_name DOT )? column_name ;
+	   (table_spec DOT)?  column_name
+;
 
 //expresstion without Lparen or Rparen
 raw_expression_list:
@@ -1275,7 +1276,8 @@ subquery:
 ;
 
 table_spec:
-	( schema_name DOT )?  table_name
+        table_name
+	  | schema_name DOT  table_name
 ;
 
 
