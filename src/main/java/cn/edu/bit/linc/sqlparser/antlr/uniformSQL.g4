@@ -1,4 +1,4 @@
-grammar zql;
+grammar uniformSQL;
 
 fragment A_ :	'a' | 'A';
 fragment B_ :	'b' | 'B';
@@ -1221,7 +1221,8 @@ privilege_alter_statement:
 //DQL
 // select ------------------------------------
 select_statement:
-      (LPAREN)?  select_expression (RPAREN)? (  UNION (ALL | DISTINCT)?  (LPAREN)? select_expression (RPAREN)? )*
+         select_expression
+      | LPAREN  select_expression RPAREN ( UNION (ALL | DISTINCT)?  LPAREN select_expression RPAREN )*
 ;
 
 select_expression:
@@ -1272,7 +1273,7 @@ column_list:
 ;
 
 subquery:
-	LPAREN select_statement RPAREN
+	 select_statement
 ;
 
 table_spec:
